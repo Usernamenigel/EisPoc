@@ -11,9 +11,16 @@ public class Tester {
 		System.out.println("Hallo, Git testen");
 //		Thread.sleep(10000);
 		dv.dbinfo();
-//		ausmachen();
-		hinzufuegen();
+//		hinzufuegen();
 		suche();
+		löschen();
+	}
+
+	private static void löschen() {
+		String s1;
+		System.out.println("Welche Person löschen: ");
+		s1 = sc.next();
+		dv.löschen(s1);
 	}
 
 	private static void hinzufuegen() {
