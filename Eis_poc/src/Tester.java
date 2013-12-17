@@ -11,7 +11,7 @@ public class Tester {
 		System.out.println("Hallo, Git testen");
 //		Thread.sleep(10000);
 		dv.dbinfo();
-//		hinzufuegen();
+		hinzufuegen();
 		suche();
 		löschen();
 	}

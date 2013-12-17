@@ -80,7 +80,10 @@ public class Datenverwaltung {
 //			System.out.println(o.toString());
 		}
 	}
-	
+	/**
+	 * Löscht das JSON Objekt aus der Datenbank mit dem Namen "wert"
+	 * @param wert Der Name des Objektes das gelöscht werden soll
+	 */
 	public void löschen(String wert) {
 		List<JsonObject> allDocs = dbClient.view("_all_docs").includeDocs(true).query(JsonObject.class);
 		for(JsonObject o: allDocs) {
