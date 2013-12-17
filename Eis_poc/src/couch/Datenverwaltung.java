@@ -33,17 +33,29 @@ public class Datenverwaltung {
 		// dbClient3.shutdown();
 	}
 
+	/**
+	 * String1 eingelesen für Attribut; String2 für Wert;
+	 * Aus dem String wird ein Json Objekt erstellt
+	 * Danach in die Datenbank gelegt
+	 */
 	public void eintrag(String s1, String s2) {
 		String jsonstr = "{" + s1 + ":" + s2 + "}";
 		JsonObject jsonobj = dbClient.getGson().fromJson(jsonstr,JsonObject.class);
 		dbClient.save(jsonobj);
 	}
 
+	/**
+	 * URI der Datenbank und der einzelen
+	 */
 	public void dbinfo() {
 		System.out.println("Die Datenbank-URI: " + dbClient.getDBUri());
 		System.out.println("Die Base-URI: " + dbClient.getBaseUri());
 	}
 
+	/** 
+	 * Durchsucht die Datenbank nach dem Attribut und gibt es aus falls gefunden
+	 * @param s Das gesuchte Attribut
+	 */
 	public void ausgabe(String s) {
 		// Holle alle Json Dokumente aus der Datenbank (view) und speichere diese in Liste
 		// Iteriere und suche nach JSON Dokumenten in der Liste
