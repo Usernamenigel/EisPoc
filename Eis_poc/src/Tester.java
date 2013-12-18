@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import jsonklassen.Profil;
 import couch.Datenverwaltung;
 
 public class Tester {
@@ -13,9 +17,34 @@ public class Tester {
 		System.out.println("Hallo, Git testen");
 //		Thread.sleep(10000);
 		dv.dbinfo();
-		hinzufuegen();
-		suche();
-		löschen();
+//		hinzufuegen();
+//		suche();
+//		löschen();
+		
+		
+		Profil profil = new Profil();
+		profil.setAlter(20);
+		profil.setKinder(false);
+		profil.setNname("Hallo");
+		profil.setVname("Peter");
+		
+		// Marshalling
+		Gson gson = new Gson();
+		String json = gson.toJson(profil);  
+		
+		JsonObject jsonObj = gson.fromJson(json, JsonObject.class);
+		JsonObject obj = gson.fromJson("{\"vname\":\"Peter\"}", JsonObject.class);
+		
+		jsonObj.addProperty("verheiratet", true);
+		System.out.println("Hier der String: " + json);
+		System.out.println("Hier das JsonObject" + jsonObj);
+		System.out.println("Hier das JsonObject2: " + obj.toString());
+		
+		// Unmarshalling
+		Profil profil2 = gson.fromJson(jsonObj, Profil.class); 
+		
+		
+		
 	}
 
 	private static void löschen() {
