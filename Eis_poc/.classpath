@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="plugins/httpcore-ab-4.3.jar"/>
 	<classpathentry kind="lib" path="plugins/httpcore-nio-4.3.jar"/>
 	<classpathentry kind="lib" path="plugins/httpmime-4.3.1.jar"/>
+	<classpathentry kind="lib" path="plugins/javax.ws.rs-api-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

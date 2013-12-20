@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Scanner;
 
 import com.google.gson.Gson;
@@ -13,13 +17,15 @@ public class Tester {
 	
 	
 	
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		System.out.println("Hallo, Git testen");
 //		Thread.sleep(10000);
 		dv.dbinfo();
 //		hinzufuegen();
 //		suche();
 //		löschen();
+		
+//		server();
 		
 		
 		Profil profil = new Profil();
@@ -42,10 +48,21 @@ public class Tester {
 		
 		// Unmarshalling
 		Profil profil2 = gson.fromJson(jsonObj, Profil.class); 
-		
-		
+	
 		
 	}
+
+//	private static void server() throws IOException {
+//		
+//		 ServerSocket listener = new ServerSocket(8080);
+//		    while(true){
+//		      Socket sock = listener.accept();
+//		      new PrintWriter(sock.getOutputStream(), true).
+//		                println("Goodbye, World!");
+//		      sock.close();
+//		    }
+//		
+//	}
 
 	private static void löschen() {
 		String s1;
