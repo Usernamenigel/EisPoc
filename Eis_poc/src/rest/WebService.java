@@ -2,7 +2,7 @@ package rest;
 
 import javax.ws.rs.*;
 
-@Path( "/helloworld" )
+@Path( "/benutzer" )
 public class WebService
 {
    @GET @Produces( "text/plain" )
