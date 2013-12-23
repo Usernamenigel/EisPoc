@@ -14,7 +14,7 @@ public class WebServer
    public static void serverAn() throws IllegalArgumentException, IOException, InterruptedException {
       url = "http://localhost:4434";
       srv = GrizzlyServerFactory.create( url );
-      System.out.println( "URL: " + url + "/hello");
+      System.out.println( "URL: " + url + "/benutzer");
    }
    
    

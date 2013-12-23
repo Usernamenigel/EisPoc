@@ -34,7 +34,7 @@ public class Tester {
 //		löschen();
 //		benutzer();
 		restAn();
-		clientAn();
+//		clientAn();
 		Thread.sleep(10*60*1000);
 		restAus();
 	}
@@ -99,7 +99,11 @@ public class Tester {
 		
 		// Unmarshalling
 		Profil profil2 = gson.fromJson(jsonObj, Profil.class); 
-	
 	}
+	
+	public static void daten() {
+		
+	}
+	
 	
 }

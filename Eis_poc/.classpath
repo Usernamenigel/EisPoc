@@ -52,14 +52,21 @@
 	<classpathentry kind="lib" path="plugins/jersey-container-grizzly2-servlet-2.5.jar"/>
 	<classpathentry kind="lib" path="plugins/jersey-grizzly-connector-2.5.jar"/>
 	<classpathentry kind="lib" path="plugins/jersey-grizzly2-1.18.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/grizzly-servlet-webserver-1.9.18.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/asm-3.1.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jackson-core-asl-1.1.1.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-client-1.1.5.1.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-core-1.1.5.1.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-json-1.1.5.1.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-server-1.1.5.1.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jettison-1.1.jar"/>
-	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="plugins/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="plugins/asm-all-repackaged-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="plugins/grizzly-framework-2.3.8.jar"/>
+	<classpathentry kind="lib" path="plugins/grizzly-http-2.3.8.jar"/>
+	<classpathentry kind="lib" path="plugins/grizzly-http-all-2.3.8.jar"/>
+	<classpathentry kind="lib" path="plugins/grizzly-http-server-2.3.8.jar"/>
+	<classpathentry kind="lib" path="plugins/grizzly-http-server-jaxws-2.3.8.jar"/>
+	<classpathentry kind="lib" path="plugins/grizzly-http-servlet-server-2.3.8.jar"/>
+	<classpathentry kind="lib" path="plugins/jackson-core-asl-1.1.1.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-client-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-core-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-json-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-server-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="plugins/jettison-1.1.jar"/>
+	<classpathentry kind="lib" path="plugins/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="plugins/simple-5.1.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
