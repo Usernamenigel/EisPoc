@@ -4,6 +4,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+
+
+
+
+
+import rest.WebClient;
+import rest.WebServer;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -14,7 +22,7 @@ public class Tester {
 
 	static Datenverwaltung dv = new Datenverwaltung();
 	static Scanner sc = new Scanner(System.in);
-	
+	static WebServer ws = new WebServer();
 	
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -24,45 +32,25 @@ public class Tester {
 //		hinzufuegen();
 //		suche();
 //		löschen();
-		
-//		server();
-		
-		
-		Profil profil = new Profil();
-		profil.setAlter(20);
-		profil.setKinder(false);
-		profil.setNname("Hallo");
-		profil.setVname("Peter");
-		
-		// Marshalling
-		Gson gson = new Gson();
-		String json = gson.toJson(profil);  
-		
-		JsonObject jsonObj = gson.fromJson(json, JsonObject.class);
-		JsonObject obj = gson.fromJson("{\"vname\":\"Peter\"}", JsonObject.class);
-		
-		jsonObj.addProperty("verheiratet", true);
-		System.out.println("Hier der String: " + json);
-		System.out.println("Hier das JsonObject" + jsonObj);
-		System.out.println("Hier das JsonObject2: " + obj.toString());
-		
-		// Unmarshalling
-		Profil profil2 = gson.fromJson(jsonObj, Profil.class); 
-	
-		
+		restAn();
+		clientAn();
+		Thread.sleep(10*60*1000);
+		restAus();
 	}
 
-//	private static void server() throws IOException {
-//		
-//		 ServerSocket listener = new ServerSocket(8080);
-//		    while(true){
-//		      Socket sock = listener.accept();
-//		      new PrintWriter(sock.getOutputStream(), true).
-//		                println("Goodbye, World!");
-//		      sock.close();
-//		    }
-//		
-//	}
+	
+	private static void restAn() throws IllegalArgumentException, IOException, InterruptedException {
+		ws.serverAn();
+	}
+	
+	private static void restAus() {
+		ws.serverAus();
+	}
+	
+	private static void clientAn() {
+		WebClient wc = new WebClient();
+		wc.starte();
+	}
 
 	private static void löschen() {
 		String s1;
@@ -88,5 +76,29 @@ public class Tester {
 		dv.ausgabe(s3);
 	}
 	
+	public static void benutzer() {
+		
+		Profil profil = new Profil();
+		profil.setAlter(20);
+		profil.setKinder(false);
+		profil.setNname("Hallo");
+		profil.setVname("Peter");
+		
+		// Marshalling
+		Gson gson = new Gson();
+		String json = gson.toJson(profil);  
+		
+		JsonObject jsonObj = gson.fromJson(json, JsonObject.class);
+		JsonObject obj = gson.fromJson("{\"vname\":\"Peter\"}", JsonObject.class);
+		
+		jsonObj.addProperty("verheiratet", true);
+		System.out.println("Hier der String: " + json);
+		System.out.println("Hier das JsonObject" + jsonObj);
+		System.out.println("Hier das JsonObject2: " + obj.toString());
+		
+		// Unmarshalling
+		Profil profil2 = gson.fromJson(jsonObj, Profil.class); 
+	
+	}
 	
 }

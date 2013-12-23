@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="plugins/lightcouch-0.0.6.jar"/>
 	<classpathentry kind="lib" path="plugins/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="plugins/commons-codec-1.6.jar"/>
@@ -29,5 +29,37 @@
 	<classpathentry kind="lib" path="plugins/httpcore-nio-4.3.jar"/>
 	<classpathentry kind="lib" path="plugins/httpmime-4.3.1.jar"/>
 	<classpathentry kind="lib" path="plugins/javax.ws.rs-api-2.0.jar"/>
+	<classpathentry kind="lib" path="plugins/cglib-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="plugins/guava-14.0.1.jar"/>
+	<classpathentry kind="lib" path="plugins/hk2-api-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="plugins/hk2-locator-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="plugins/hk2-utils-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="plugins/javax.annotation-api-1.2.jar"/>
+	<classpathentry kind="lib" path="plugins/javax.inject-2.2.0-b21.jar"/>
+	<classpathentry kind="lib" path="plugins/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="plugins/jaxb-api-2.2.7.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-client.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-common.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-container-servlet.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-server.jar"/>
+	<classpathentry kind="lib" path="plugins/org.osgi.core-4.2.0.jar"/>
+	<classpathentry kind="lib" path="plugins/osgi-resource-locator-1.0.1.jar"/>
+	<classpathentry kind="lib" path="plugins/persistence-api-1.0.jar"/>
+	<classpathentry kind="lib" path="plugins/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="plugins/grizzly-servlet-webserver-1.9.18.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-container-grizzly2-http-2.5.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-container-grizzly2-servlet-2.5.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-grizzly-connector-2.5.jar"/>
+	<classpathentry kind="lib" path="plugins/jersey-grizzly2-1.18.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/grizzly-servlet-webserver-1.9.18.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jackson-core-asl-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-client-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-core-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-json-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jersey-server-1.1.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jettison-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Dropbox/Fachhochschule/Semester 5/EIS/Plugins/WBA_2_Phase_2_jars/jersey/jsr311-api-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
