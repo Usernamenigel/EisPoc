@@ -7,6 +7,9 @@ public class Profil {
 	public int alter;
 	public boolean kinder;
 	
+	public Profil() {
+	}
+	
 	public String getVname() {
 		return vname;
 	}

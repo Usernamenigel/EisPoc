@@ -34,7 +34,7 @@ public class Tester {
 //		löschen();
 //		benutzer();
 		restAn();
-//		clientAn();
+		clientAn();
 		Thread.sleep(10*60*1000);
 		restAus();
 	}
@@ -51,6 +51,8 @@ public class Tester {
 	private static void clientAn() {
 		WebClient wc = new WebClient();
 		wc.starte();
+		wc.testText();
+		wc.einBenutzer();
 	}
 
 	private static void löschen() {

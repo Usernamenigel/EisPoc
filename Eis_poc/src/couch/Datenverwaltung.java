@@ -1,5 +1,6 @@
 package couch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lightcouch.CouchDbClient;
@@ -95,6 +96,23 @@ public class Datenverwaltung {
 				System.out.println("Wurde gelöscht");
 			}
 		}
+	}
+	
+	public List<JsonObject> getBenutzer() {
+		List<JsonObject> jsonlist = new ArrayList<JsonObject>();
+		jsonlist = dbClient.view("_all_docs").includeDocs(true).query(JsonObject.class);
+		return jsonlist;
+	}
+	
+	/**
+	 * Der erste Eintrag wird zurückgegeben
+	 * @return Erster Bentzer in Liste
+	 */
+	public JsonObject getEinBenutzer() {
+		List<JsonObject> jsonlist = new ArrayList<JsonObject>();
+		jsonlist = dbClient.view("_all_docs").includeDocs(true).query(JsonObject.class);
+		System.out.println("Hier ist Datenverwaltung");
+		return jsonlist.get(0);
 	}
 
 	
