@@ -4,11 +4,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-
-
-
-
-
 import rest.WebClient;
 import rest.WebServer;
 
@@ -21,38 +16,31 @@ import couch.Datenverwaltung;
 public class Tester {
 
 	static Datenverwaltung dv = new Datenverwaltung();
+	static WebClient wc;
+	static WebServer ws;
 	static Scanner sc = new Scanner(System.in);
-	static WebServer ws = new WebServer();
-	
 	
 	public static void main(String[] args) throws InterruptedException, IOException {
-		System.out.println("Hallo, Git testen");
-//		Thread.sleep(10000);
 		dv.dbinfo();
 //		hinzufuegen();
 //		suche();
 //		löschen();
 //		benutzer();
-		restAn();
+		serverAn();
 		clientAn();
 		Thread.sleep(10*60*1000);
-		restAus();
+		System.out.println("Server ende");
 	}
-
 	
-	private static void restAn() throws IllegalArgumentException, IOException, InterruptedException {
+	public static void serverAn() throws IOException, InterruptedException {
 		ws.serverAn();
 	}
 	
-	private static void restAus() {
-		ws.serverAus();
-	}
-	
-	private static void clientAn() {
-		WebClient wc = new WebClient();
-		wc.starte();
-		wc.testText();
-		wc.einBenutzer();
+	public static void clientAn() {
+		wc = new WebClient();
+		wc.getTest();
+		wc.getJson();
+		wc.getJson2();
 	}
 
 	private static void löschen() {
@@ -79,8 +67,8 @@ public class Tester {
 		dv.ausgabe(s3);
 	}
 	
+	
 	public static void benutzer() {
-		
 		Profil profil = new Profil();
 		profil.setAlter(20);
 		profil.setKinder(false);

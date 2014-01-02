@@ -3,46 +3,60 @@ package rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 import com.google.gson.JsonObject;
-import com.sun.jersey.api.client.*;
+
 
 public class WebClient {
 
-	String jsonStr;
-	List<JsonObject> liste = new ArrayList<JsonObject>();
-	static String url;
-	static WebResource wrs;
+	Client client = ClientBuilder.newClient();
+    String uri = "http://localhost:4434";
+    
+    
+	/**
+	 * Hier eine Get vom Client
+	 */
+	public void getTest() {
 	
-	public static void starte() {
-		url = "http://localhost:4434/benutzer";
-		System.out.println("URL: " + url);
+		System.out.println(uri+"/benutzer");
+		Response res = client.target(uri+"/benutzer").request("text/plain").get();
+	    String message = res.readEntity(String.class);
+	    System.out.println(res.toString());
+	    System.out.println(message);
+	    
+	    
+	    /**
+	     * Oder so
+	     */
+	    WebTarget target = client.target(uri);
+	    Response response = null;
 
-		wrs = Client.create().resource(url);
-
-		System.out.println("\nTextausgabe:");
-		System.out.println(wrs.accept("text/plain").get(String.class));
-	}
-
-	public void holeBenutzer() {
-		wrs = Client.create().resource(url);
-		liste = wrs.accept("Application/Json").get( new GenericType<List<JsonObject>>() {} );
-		System.out.println("Hallo das sind alle Benutzer: ");
-		for(JsonObject jo : liste) {
-			System.out.println(jo.get("Name").toString());
-		}
-   }
-	
-	public void einBenutzer() {
-		wrs = Client.create().resource(url);
-		System.out.println("Hier ist der WebClient JSON");
-		JsonObject jo = wrs.accept("application/json").get(JsonObject.class);
-		System.out.println("Hier das eine JsonObjet: " + jo.toString());
+        try {
+            response = target.path("/benutzer").request().get(Response.class);
+            System.out.println(response.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 	}
 	
-	public void testText() {
-		wrs = Client.create().resource("http://localhost:4434/benutzer/0");
-		System.out.println(wrs.accept("text/plain").get(String.class));
+	public void getJson() {
+		Response res = client.target(uri+"/benutzer/json").request("Application/Json").get();
+		System.out.println(res.toString());
 	}
+	
+	public void getJson2() {
+		JsonObject o = client.target(uri+"/benutzer/json").request("Application/Json").get(JsonObject.class);
+		System.out.println(o.toString());
+	}
+	
 }
+
+
+
+
+//client.property("MyProperty", "MyValue").register(MyProvider.class).enable(MyFeature.class);
