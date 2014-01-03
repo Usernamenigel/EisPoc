@@ -42,5 +42,6 @@
 	<classpathentry kind="lib" path="plugins/osgi-resource-locator-1.0.1.jar"/>
 	<classpathentry kind="lib" path="plugins/persistence-api-1.0.jar"/>
 	<classpathentry kind="lib" path="plugins/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="plugins/jackson-core-2.2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,5 +1,8 @@
 package jsonklassen;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Profil {
 	
 	public String vname;

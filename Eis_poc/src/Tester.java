@@ -41,6 +41,7 @@ public class Tester {
 		wc.getTest();
 		wc.getJson();
 		wc.getJson2();
+		wc.getJson3();
 	}
 
 	private static void löschen() {
@@ -66,8 +67,7 @@ public class Tester {
 		s3 = sc.next();
 		dv.ausgabe(s3);
 	}
-	
-	
+		
 	public static void benutzer() {
 		Profil profil = new Profil();
 		profil.setAlter(20);
