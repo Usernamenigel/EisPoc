@@ -11,6 +11,10 @@ import java.util.List;
 
 
 
+
+
+
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -26,6 +30,7 @@ import org.apache.http.entity.StringEntity;
 import jsonklassen.Profil;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -35,6 +40,7 @@ import couch.Datenverwaltung;
 public class WebService {
 
 	Gson gson = new Gson();
+	Datenverwaltung dv = new Datenverwaltung();
 	
 	
 	@GET
@@ -82,14 +88,16 @@ public class WebService {
     }
 	
 	/**
-	 * JsonObject Liste in eine String Liste kopieren
+	 * JsonObject-Liste in eine String-Liste kopieren
+	 * Diese wird testhalber doppelt ausgegeben um das kopieren zu überprüfen
+	 * 
+	 * NACHTRAG: jsonlist als String geht ebenso
 	 * @return String Liste in JsonFormat
 	 */
 	@Path("/liste")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> holeBenutzerListe() {
-		Datenverwaltung dv = new Datenverwaltung();
+	public String holeBenutzerListe() {
 		List<JsonObject> jsonlist = new ArrayList<JsonObject>();
 		List<String> jsonString = new ArrayList<String>();
 		jsonlist = dv.getBenutzer();
@@ -98,16 +106,42 @@ public class WebService {
 			jsonString.add(i, gson.toJson(jsonlist.get(i)));
 			System.out.println(jsonString.get(i).toString());
 		}
-		final GenericEntity<List<String>> entity = new GenericEntity<List<String>>(jsonString) { };
-		return jsonString;
+//		final GenericEntity<List<String>> entity = new GenericEntity<List<String>>(jsonString) { };
+		// Da die Übergabe von Listen nicht funktioniert wird hier ein einzelner String mit der Menge an Daten zurücjgegeben
+		return gson.toJson(jsonlist);
 	}
 	
+	/** 
+	 * Ähnliche Methode nur mit einem JsonArray welches mit Objekten gefühlt wird
+	 * Gefüllte JsonArray wird in einen String gemarshellt und dieser wird zurückgegeben
+	 * Der Client kann umständlicher und über Umwege diesen String wieder in ein JsonArray umwandeln.
+	 * @return
+	 */
+	@Path("/array")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String holeBenutzerArray() {
+		List<JsonObject> jsonlist = dv.getBenutzer();
+		JsonArray jsonarray = new JsonArray();
+		for(int i = 0; i<jsonlist.size(); i++) {
+			System.out.println(jsonlist.get(i).toString());
+			jsonarray.add(jsonlist.get(i));
+			System.out.println(jsonarray.get(i).toString());
+		}
+		return gson.toJson(jsonarray);
+	}
+	 
+	
 	@POST
-	@Path("/post")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createTrackInJSON(Profil profil) {
+	@Path("/post/{id}")	
+	@Consumes("text/plain")
+	public Response createTrackInJSON(String profil) {
+		System.out.println("HEY GEHT? WS");
+		JsonObject obj = gson.fromJson(profil, JsonObject.class);
+		dv.eintragJson(obj);
 		String result = "gespeichert : " + profil;
-		return Response.status(201).entity(result).build();
+		return Response.noContent().build();
+//		return Response.status(201).entity(result).build();
 	}
 }
 

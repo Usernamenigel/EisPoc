@@ -41,7 +41,8 @@ public class Tester {
 		wc.getTest();
 		wc.getJson();
 		wc.getJson2();
-		wc.getJson3();
+		wc.getJsonArray();
+		wc.putJson();
 	}
 
 	private static void löschen() {

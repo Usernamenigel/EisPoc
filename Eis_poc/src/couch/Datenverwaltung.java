@@ -34,6 +34,23 @@ public class Datenverwaltung {
 		// dbClient2.shutdown();
 		// dbClient3.shutdown();
 	}
+	
+	/**
+	 * Eintragen halt
+	 * 
+	 * @param s1 Attribut
+	 * @param s2 Wert
+	 */
+	public void eintrag(String atr, String wert) {
+		JsonObject object = new JsonObject();
+		object.addProperty(atr, wert);
+		dbClient.save(object);
+		System.out.println("Objekt eingetragen mit Attribut: " + atr + ": " + wert);
+		
+//		String jsonstr = "{" + s1 + ":" + s2 + "}";
+//		JsonObject jsonobj = dbClient.getGson().fromJson(jsonstr,JsonObject.class);
+//		dbClient.save(jsonobj);
+	}
 
 	/**
 	 * Aus dem String wird ein Json Objekt erstellt
@@ -42,23 +59,12 @@ public class Datenverwaltung {
 	 * @param s1 Das Attirbut
 	 * @param s2 Der Wert
 	 */
-	public void eintrag(String s1, String s2) {
-		String jsonstr = "{" + s1 + ":" + s2 + "}";
-		JsonObject jsonobj = dbClient.getGson().fromJson(jsonstr,JsonObject.class);
-		dbClient.save(jsonobj);
+	public void eintragJson(JsonObject jo) {
+		dbClient.save(jo);
+		System.out.println("HEY GEHT? DV");
+		System.out.println("Objekt eingetragen mit Attribut: " + jo);
 	}
 	
-	/**
-	 * Eintragen halt
-	 * 
-	 * @param s1 Attribut
-	 * @param s2 Wert
-	 */
-	public void eintrag2(String s1, String s2) {
-		JsonObject object = new JsonObject();
-		object.addProperty(s1, s2);
-		dbClient.save(object);
-	}
 	
 
 	/** 
@@ -111,7 +117,6 @@ public class Datenverwaltung {
 	public JsonObject getEinBenutzer() {
 		List<JsonObject> jsonlist = new ArrayList<JsonObject>();
 		jsonlist = dbClient.view("_all_docs").includeDocs(true).query(JsonObject.class);
-		System.out.println("Hier ist Datenverwaltung");
 		return jsonlist.get(0);
 	}
 
