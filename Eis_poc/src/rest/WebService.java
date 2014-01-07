@@ -15,10 +15,15 @@ import java.util.List;
 
 
 
+
+
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
@@ -131,18 +136,40 @@ public class WebService {
 		return gson.toJson(jsonarray);
 	}
 	 
-	
+	/**
+	 * Die ID ist noch nicht in Gebrauch
+	 * Später wird ID zu Name
+	 * @param profil
+	 * @return
+	 */
 	@POST
 	@Path("/post/{id}")	
 	@Consumes("text/plain")
-	public Response createTrackInJSON(String profil) {
-		System.out.println("HEY GEHT? WS");
+	public Response erstelleEintrag(@PathParam("id") int id, String profil) {
 		JsonObject obj = gson.fromJson(profil, JsonObject.class);
 		dv.eintragJson(obj);
-		String result = "gespeichert : " + profil;
 		return Response.noContent().build();
 //		return Response.status(201).entity(result).build();
 	}
+	
+	/**
+	 * 
+	 * Es wird hier die Methode dv.löschen() aufgerufen die nach Namen sucht und
+	 * gewünschten Namen dann löscht.
+	 * @param id
+	 * @param attribut
+	 * @return
+	 */
+	@DELETE
+	@Path("/delete/{name}")	
+	@Produces("text/plain")
+	public Response löscheEintrag(@PathParam("name") String name) {
+		dv.löschen(name);
+		return Response.noContent().build();
+	}
+	
+	
+	
 }
 
 

@@ -61,8 +61,7 @@ public class Datenverwaltung {
 	 */
 	public void eintragJson(JsonObject jo) {
 		dbClient.save(jo);
-		System.out.println("HEY GEHT? DV");
-		System.out.println("Objekt eingetragen mit Attribut: " + jo);
+		System.out.println("Objekt eingetragen: " + jo);
 	}
 	
 	

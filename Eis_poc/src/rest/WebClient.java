@@ -6,6 +6,9 @@ import java.util.List;
 
 
 
+
+import java.util.Scanner;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -35,6 +38,7 @@ public class WebClient {
 	Client client = ClientBuilder.newClient();
     String uri = "http://localhost:4434";
     Gson gson = new Gson();
+	static Scanner sc = new Scanner(System.in);
     
 	/**
 	 * Hier eine Get vom Client und ruft den String unter /Benutzer auf.
@@ -94,8 +98,14 @@ public class WebClient {
 		String profilJson = gson.toJson(profil);  
 		
 		Response response = client.target(uri+"/benutzer/post/0").request().post(Entity.text(profilJson));
-		System.out.println("HEY GEHT? WC");
 //		Invocation inv2 = client.target(uri+"/benutzer/post/0").request().build(profilJson);
+	}
+	
+	public void löscheJson() {
+		System.out.println("Welche Person löschen: ");
+		String attribut = sc.next();
+		Response response = client.target(uri+"/benutzer/delete/"+ attribut).request().delete();
+		System.out.println(response);
 	}
 }
 
