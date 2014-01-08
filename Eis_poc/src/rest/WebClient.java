@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-import jsonklassen.Profil;
+import jsonklassen.Profile;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientResponse;
@@ -90,7 +90,7 @@ public class WebClient {
 	}
 	
 	public void putJson() {
-		Profil profil = new Profil();
+		Profile profil = new Profile();
 		profil.setAlter(100);
 		profil.setKinder(true);
 		profil.setNname("Verbale");

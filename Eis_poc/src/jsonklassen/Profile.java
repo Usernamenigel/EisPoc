@@ -3,14 +3,14 @@ package jsonklassen;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Profil {
+public class Profile {
 	
 	public String vname;
 	public String nname;
 	public int alter;
 	public boolean kinder;
 	
-	public Profil() {
+	public Profile() {
 	}
 	
 	public String getVname() {

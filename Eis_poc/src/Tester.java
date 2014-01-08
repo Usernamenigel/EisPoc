@@ -10,7 +10,7 @@ import rest.WebServer;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import jsonklassen.Profil;
+import jsonklassen.Profile;
 import couch.Datenverwaltung;
 
 public class Tester {
@@ -71,7 +71,7 @@ public class Tester {
 	}
 		
 	public static void benutzer() {
-		Profil profil = new Profil();
+		Profile profil = new Profile();
 		profil.setAlter(20);
 		profil.setKinder(false);
 		profil.setNname("Hallo");
@@ -90,7 +90,7 @@ public class Tester {
 		System.out.println("Hier das JsonObject2: " + obj.toString());
 		
 		// Unmarshalling
-		Profil profil2 = gson.fromJson(jsonObj, Profil.class); 
+		Profile profil2 = gson.fromJson(jsonObj, Profile.class); 
 	}
 	
 	public static void daten() {

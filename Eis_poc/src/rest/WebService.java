@@ -9,15 +9,6 @@ import java.util.List;
 
 
 
-
-
-
-
-
-
-
-
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,7 +23,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.http.entity.StringEntity;
 
-import jsonklassen.Profil;
+import jsonklassen.Profile;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -75,7 +66,7 @@ public class WebService {
 	@Path("/get")
 	@Produces("application/json")
 	public String getTrackInJSON() {
-		Profil profil = new Profil();
+		Profile profil = new Profile();
 		profil.setAlter(34);
 		profil.setKinder(true);
 		profil.setNname("Mangelhaft");
