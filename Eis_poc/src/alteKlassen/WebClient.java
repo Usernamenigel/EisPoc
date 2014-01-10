@@ -1,4 +1,4 @@
-package rest;
+package alteKlassen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-
-import jsonklassen.Profile;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientResponse;

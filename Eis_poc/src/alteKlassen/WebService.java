@@ -1,9 +1,10 @@
-package rest;
+package alteKlassen;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 
 
@@ -23,14 +24,11 @@ import javax.ws.rs.core.Response;
 
 import org.apache.http.entity.StringEntity;
 
-import jsonklassen.Profile;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import couch.Datenverwaltung;
 
 @Path("/benutzer")
 public class WebService {

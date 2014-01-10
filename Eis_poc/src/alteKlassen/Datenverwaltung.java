@@ -1,4 +1,5 @@
-package couch;
+package alteKlassen;
+
 
 import java.util.ArrayList;
 import java.util.List;

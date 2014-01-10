@@ -1,4 +1,4 @@
-package jsonklassen;
+package alteKlassen;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

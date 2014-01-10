@@ -8,12 +8,17 @@ public class Todo {
 	Boolean istErledigt;
 	IProfil zustaendig;
 	int id;
+	int kreisId;
 	
-	public Todo(String bezeichnung, String beschreibung, IProfil ersteller) {
+	public Todo() {
+	}
+	
+	public Todo(String bezeichnung, String beschreibung, IProfil ersteller, int kreisId) {
 		istErledigt = false;
 		this.bezeichnung = bezeichnung;
 		this.beschreibung = beschreibung;
 		this.ersteller = ersteller;
+		this.kreisId = kreisId;
 	}
 	
 	public IProfil getErsteller() {
@@ -39,6 +44,22 @@ public class Todo {
 	
 	public IProfil getZustaendiger() {
 		return zustaendig;
+	}
+	
+	public void setid(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public int getKreisid() {
+		return kreisId;
+	}
+	
+	public void setKreisId(int id) {
+		kreisId = id;
 	}
 
 }

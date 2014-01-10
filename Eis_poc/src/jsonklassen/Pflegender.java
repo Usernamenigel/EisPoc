@@ -7,6 +7,9 @@ public class Pflegender implements IProfil {
 	int kreisId;
 	int id;
 	
+	public Pflegender() {
+	}
+	
 	public Pflegender (String nname, String vname, int kreis) {
 		nName = nname;
 		vName = vname;

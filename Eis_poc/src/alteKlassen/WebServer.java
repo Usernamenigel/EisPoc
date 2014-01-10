@@ -1,4 +1,4 @@
-package rest;
+package alteKlassen;
 
 import java.io.IOException;
 import java.net.URI;

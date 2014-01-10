@@ -1,7 +1,9 @@
 
 package jsonklassen;
 
-public interface IProfil {
+import java.io.Serializable;
+
+public interface IProfil extends Serializable {
 	
 	public String getNname();
 	

@@ -1,4 +1,5 @@
-package rest;
+package alteKlassen;
+
 
 import java.io.IOException;
 import java.io.InputStream;

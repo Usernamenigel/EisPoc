@@ -1,5 +1,6 @@
 package jsonklassen;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Kreis {
@@ -7,10 +8,17 @@ public class Kreis {
 	int id;
 	protected List<Todo> todo;
 	protected List<Kalender> kalender;
-	protected List<IProfil> mitglieder;
+	protected List<Pflegender> pflegende;
+	protected Dementer dementer;
+	
+	public Kreis() {
+	}
 	
 	public Kreis(int id) {
 		this.id = id;
+		pflegende = new ArrayList<Pflegender>();
+		kalender = new ArrayList<Kalender>();
+		todo = new ArrayList<Todo>();
 	}
 	
 	public void setId(int id) {
@@ -37,11 +45,11 @@ public class Kreis {
 		return kalender;
 	}
 	
-	public void addMitglied(IProfil glied) {
-		mitglieder.add(glied);
+	public void addPflegender(Pflegender glied) {
+		pflegende.add(glied);
 	}
 	
-	public List<IProfil> getMitglieder() {
-		return mitglieder;
+	public List<Pflegender> getMitglieder() {
+		return pflegende;
 	}
 }

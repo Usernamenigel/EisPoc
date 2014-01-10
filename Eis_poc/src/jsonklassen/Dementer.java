@@ -8,6 +8,9 @@ public class Dementer implements IProfil {
 	int kreisId;
 	String beschreibung;
 	
+	public Dementer() {
+	}
+	
 	public Dementer(String Vname, String Nname, int kreis, String beschreibung) {
 		nName = Nname;
 		vName = Vname;

@@ -1,17 +1,13 @@
+package alteKlassen;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-import rest.WebClient;
-import rest.WebServer;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import jsonklassen.Profile;
-import couch.Datenverwaltung;
 
 public class Tester {
 
@@ -20,7 +16,7 @@ public class Tester {
 	static WebServer ws;
 	static Scanner sc = new Scanner(System.in);
 	
-	public static void main(String[] args) throws InterruptedException, IOException {
+	public static void tuwas(String[] args) throws InterruptedException, IOException {
 		dv.dbinfo();
 //		hinzufuegen();
 //		suche();
