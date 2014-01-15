@@ -5,11 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 public class Kalender {
-
+	
+	/**
+	 * <IProfil> Liste durch konkrete Klassen ersetzt
+	 * <Pflegender> teilnehmer (alle die Zeit haben [ifHatZeit()])
+	 * 
+	 */
 	String bezeichnung;
 	String beschreibung;
 	IProfil ersteller;
-	List<IProfil> teilnehmer;
+	List<Pflegender> teilnehmer;
+	List<Pflegender> verfügbar;	
 	List<Kommentar> kommentar;
 	int kreisId;
 	int id;
@@ -39,7 +45,12 @@ public class Kalender {
 		return ersteller;
 	}
 	
-	public List<IProfil> getTeilnehmer() {
+	/**
+	 * Auch hier musste <IProfil> durch konkrete Klasse ersetzt werden
+	 * da GSON Probleme bereitet
+	 * @return teilnehmenden Personen
+	 */
+	public List<Pflegender> getTeilnehmer() {
 		return teilnehmer;
 	}
 	
