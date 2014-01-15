@@ -10,11 +10,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import jsonklassen.Dementer;
 import jsonklassen.IProfil;
 import jsonklassen.InterfaceAdapter;
 import jsonklassen.Kalender;
+import jsonklassen.Kommentar;
 import jsonklassen.Kreis;
 import jsonklassen.Pflegender;
+import jsonklassen.Todo;
 import couch.Datenbankverwaltung;
 
 public class Main {
@@ -27,23 +30,37 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		dv = new Datenbankverwaltung();
-
+		fuellen();
+	}
+	
+	private static void fuellen() {
+		Dementer dementer = new Dementer("DementerV", "DementerV", 0, "hat hunger");
+		Pflegender pflegender = new Pflegender("NachName", "Vorname", 0);
+//		Kalender kalender = new Kalender("heute", "bitte putzen", pflegender, 0, 2002, 11, 11, 11, 11);
+		Kalender kalender = new Kalender();
+		Todo todo = new Todo("Bad", "bitte putzen", dementer, 0);
+		Kommentar kommentar = new Kommentar("Das ist ein Kommentar", pflegender);
 		Kreis kreis = new Kreis(0);
-		kreis.addPflegender(new Pflegender("Hans", "Peter", 0));
-		String json = gson.toJson(kreis);
-		JsonObject jsonObj = gson.fromJson(json, JsonObject.class);
-		dv.add(jsonObj, "Kreis");
 		
-		List<JsonObject> kralt = dv.getAll("Kreis");
-		JsonObject js = kralt.get(0);
+		String dementers = gson.toJson(dementer);
+		String pflegenders = gson.toJson(pflegender);
+		String kalenders = gson.toJson(kalender);
+		String todos = gson.toJson(todo);
+		String kommentars = gson.toJson(kommentar);
+		String kreiss = gson.toJson(kreis);
 		
-		Kreis kr = gson.fromJson(js, Kreis.class);
-		Pflegender mensch = new Pflegender("Nigel", "David", 2);
-		kr.addPflegender(mensch);
+		JsonObject dementerj = gson.fromJson(dementers, JsonObject.class);
+		JsonObject pflegenderj = gson.fromJson(pflegenders, JsonObject.class);
+		JsonObject kalenderj = gson.fromJson(kalenders, JsonObject.class);
+		JsonObject todoj = gson.fromJson(todos, JsonObject.class);
+		JsonObject kommentarj = gson.fromJson(kommentars, JsonObject.class);
+		JsonObject kreisj = gson.fromJson(kreiss, JsonObject.class);
 		
-		String jas = gson.toJson(kr);
-		JsonObject jsonObj2 = gson.fromJson(jas, JsonObject.class);
-		
-		dv.set(jsonObj2, "Kreis");
+		dv.add(dementerj, "dementer");
+		dv.add(pflegenderj, "pflegender");
+		dv.add(kalenderj, "kalender");
+		dv.add(todoj, "todo");
+		dv.add(kommentarj, "kommentar");
+		dv.add(kreisj, "kreis");
 	}
 }

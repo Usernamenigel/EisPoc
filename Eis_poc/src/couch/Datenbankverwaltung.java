@@ -73,8 +73,7 @@ public class Datenbankverwaltung {
 	 */
 	private CouchDbClient getHandler(String db) {
 		for(CouchDbClient cdb : handlerlist) {
-			if(cdb.toString().equals("dbc"+db))
-				System.out.println("HEY " + db);
+			if(cdb.getDBUri().toString().equals("http://127.0.0.1:5984/db" + db +"/")) 
 				return cdb;
 		}
 		return null;

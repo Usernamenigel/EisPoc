@@ -49,7 +49,7 @@ public class Kreis {
 		pflegende.add(glied);
 	}
 	
-	public List<Pflegender> getMitglieder() {
+	public List<Pflegender> getPflegende() {
 		return pflegende;
 	}
 }

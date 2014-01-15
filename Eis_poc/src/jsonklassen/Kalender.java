@@ -22,6 +22,7 @@ public class Kalender {
 	Calendar cal;
 	
 	public Kalender() {
+		Calendar cal = Calendar.getInstance();
 	}
 	
 	public Kalender(String bezeichnung, String beschreibung, IProfil ersteller, int kreisId,
