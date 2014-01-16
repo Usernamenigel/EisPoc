@@ -33,7 +33,7 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		dv = new Datenbankverwaltung();
-		fuellen();
+//		fuellen();
 		WebServer server = new WebServer();
 		JFrame frameCon = new JFrame("Verbindung");
         frameCon.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +69,7 @@ public class Main {
 			dv.add(todoj, "todo");
 			
 
-			Kommentar kommentar = new Kommentar("Das ist Kommentar Nr: "+i, pflegender, i, i);
+			Kommentar kommentar = new Kommentar("Das ist Kommentar Nr: "+i, pflegender,i, i, i);
 			String kommentars = gson.toJson(kommentar);
 			JsonObject kommentarj = gson.fromJson(kommentars, JsonObject.class);
 			dv.add(kommentarj, "kommentar");
