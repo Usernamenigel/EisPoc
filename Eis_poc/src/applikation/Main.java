@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import rest.WebServer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,6 +34,14 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		dv = new Datenbankverwaltung();
 		fuellen();
+		WebServer server = new WebServer();
+		JFrame frameCon = new JFrame("Verbindung");
+        frameCon.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameCon.setSize(500, 300);
+        frameCon.setLocationRelativeTo(null);
+        frameCon.setVisible(true);
+		server.serverAn();
+		
 	}
 	
 	private static void fuellen() {
