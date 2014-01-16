@@ -118,7 +118,7 @@ public class Datenbankverwaltung {
 	 *  Das gesuchte Attribut, Db die nötige Datenbank
 	 */
 	public JsonObject get(int id, int kreisId, int kalenderId, String db) {
-		if(("dbc"+db).equals("dbcKreis")) {
+		if(("dbc"+db).equals("dbckreis")) {
 			List<JsonObject> allDocs = dbcKreis.view("_all_docs").includeDocs(true).query(JsonObject.class);
 			for (JsonObject o : allDocs) {
 				if (o.get("id").getAsInt() == id) {
@@ -127,7 +127,7 @@ public class Datenbankverwaltung {
 			}
 			return null;
 		}
-		else if(("dbc"+db).equals("dbcKommentar")) {
+		else if(("dbc"+db).equals("dbckommentar")) {
 			List<JsonObject> allDocs = dbcKommentar.view("_all_docs").includeDocs(true).query(JsonObject.class);
 			for (JsonObject o : allDocs) {
 				if (o.get("id").getAsInt() == id && o.get("kreisId").getAsInt() == kreisId &&
@@ -162,7 +162,7 @@ public class Datenbankverwaltung {
 	 * @param kreis
 	 */
 	public void set(JsonObject object, String db) {
-		if(("dbc"+db).equals("dbcKreis")) {
+		if(("dbc"+db).equals("dbckreis")) {
 			List<JsonObject> allDocs = dbcKreis.view("_all_docs").includeDocs(true).query(JsonObject.class);
 			for(JsonObject o: allDocs) {
 				if (o.get("id").getAsInt() == object.get("id").getAsInt()) {
@@ -173,7 +173,7 @@ public class Datenbankverwaltung {
 				}
 			}
 		}
-		else if(("dbc"+db).equals("dbcKommentar")) {
+		else if(("dbc"+db).equals("dbckommentar")) {
 			List<JsonObject> allDocs = dbcKommentar.view("_all_docs").includeDocs(true).query(JsonObject.class);
 			for (JsonObject o : allDocs) {
 				if (o.get("id").getAsInt() == object.get("id").getAsInt() && o.get("kreisId").getAsInt()
@@ -208,7 +208,7 @@ public class Datenbankverwaltung {
 	 * @param Kreis-ID die gelöscht werden soll (nicht _id) u.s.w
 	 */
 	public void delete(int id, int kreisId, int kalenderId, String db) {
-		if(("dbc"+db).equals("dbcKreis")) {
+		if(("dbc"+db).equals("dbckreis")) {
 			List<JsonObject> allDocs = dbcKreis.view("_all_docs").includeDocs(true).query(JsonObject.class);
 			for(JsonObject o: allDocs) {
 				if((o.get("id").getAsInt() == id)) {
@@ -216,7 +216,7 @@ public class Datenbankverwaltung {
 				}
 			}
 		}
-		else if(("dbc"+db).equals("dbcKommentar")) {
+		else if(("dbc"+db).equals("dbckommentar")) {
 			List<JsonObject> allDocs = dbcKommentar.view("_all_docs").includeDocs(true).query(JsonObject.class);
 			for(JsonObject o: allDocs) {
 				if((o.get("id").getAsInt() == id && o.get("kreisId").getAsInt() == kreisId &&

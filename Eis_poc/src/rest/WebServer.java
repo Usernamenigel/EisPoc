@@ -19,7 +19,7 @@ public class WebServer {
 		
 		URI baseUri = UriBuilder.fromUri("http://localhost/").port(4434).build();
 		
-		ResourceConfig config = new ResourceConfig().register(WebService.class);
+		ResourceConfig config = new ResourceConfig().register(ServiceKreis.class);
 		HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
 		
 		try {
