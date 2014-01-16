@@ -32,7 +32,7 @@ public class ServiceKreis {
 	 * Speichere diesen String in eine String List
 	 * wandle String-Liste in einen eigenen Json konformen String und gebe diesen zurück
 	 * 
-	 * @return String Liste in JsonFormat
+	 * @return String Liste in JsonObject Form
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -40,9 +40,9 @@ public class ServiceKreis {
 		List<JsonObject> jsonlist = new ArrayList<JsonObject>();
 		List<String> jsonString = new ArrayList<String>();
 		jsonlist = dv.getAll(db);
-		for(int i = 0; i<jsonlist.size(); i++) {
-			jsonString.add(i, gson.toJson(jsonlist.get(i)));
-		}
+//		for(int i = 0; i<jsonlist.size(); i++) {
+//			jsonString.add(i, gson.toJson(jsonlist.get(i)));
+//		}
 		return gson.toJson(jsonlist);
     }
 	
@@ -52,9 +52,9 @@ public class ServiceKreis {
 	 * @return
 	 */
 	@GET
-	@Path("/{Kid}")
+	@Path("/{kid}")
 	@Produces(MediaType.APPLICATION_JSON)
-    public String getKreis(@PathParam("Kid") int i) {
+    public String getKreis(@PathParam("kid") int i) {
         return gson.toJson(dv.get(i, 0, 0, db));
     }
 	
@@ -64,23 +64,23 @@ public class ServiceKreis {
 	 * @param Das Kreisobjekt
 	 */
 	@PUT
-	@Path("/{Kid}")
+	@Path("/{kid}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addKreis(@PathParam("Kid") int id, String kreis) {
+	public void addKreis(String kreis) {
 		dv.add(gson.fromJson(kreis, JsonObject.class), db);
 	}
 	
 	@POST
-	@Path("/{Kid}")
+	@Path("/{kid}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void setKreis(@PathParam("Kid") int id, String kreis) {
-		dv.add(gson.fromJson(kreis, JsonObject.class), db);
+	public void setKreis(String kreis) {
+		dv.set(gson.fromJson(kreis, JsonObject.class), db);
 	}
 	
 	@DELETE
-	@Path("/{Kid}")
+	@Path("/{kid}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void deleteKreis(@PathParam("Kid") int id) {
+	public void deleteKreis(@PathParam("kid") int id) {
 		dv.delete(id, 0, 0, db);
 	}
 }
