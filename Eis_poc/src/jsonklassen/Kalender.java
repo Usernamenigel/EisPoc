@@ -15,7 +15,7 @@ public class Kalender {
 	String beschreibung;
 	IProfil ersteller;
 	List<Pflegender> teilnehmer;
-	List<Pflegender> verfügbar;	
+	List<Pflegender> verfuegbar;	
 	List<Kommentar> kommentar;
 	int kreisId;
 	int id;
