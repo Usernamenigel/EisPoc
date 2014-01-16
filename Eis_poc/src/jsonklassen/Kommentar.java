@@ -11,9 +11,11 @@ public class Kommentar {
 	public Kommentar() {
 	}
 	
-	public Kommentar(String kommentar, IProfil ersteller) {
+	public Kommentar(String kommentar, IProfil ersteller, int kalenderId, int id) {
 		this.kommentar = kommentar;
 		this.ersteller = ersteller;
+		this.kalenderId = kalenderId;
+		this.id = id;
 	}
 	
 	public String getKommentar() {

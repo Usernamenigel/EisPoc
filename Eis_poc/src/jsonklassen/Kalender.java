@@ -25,13 +25,14 @@ public class Kalender {
 		Calendar cal = Calendar.getInstance();
 	}
 	
-	public Kalender(String bezeichnung, String beschreibung, IProfil ersteller, int kreisId,
+	public Kalender(String bezeichnung, String beschreibung, IProfil ersteller, int kreisId, int id,
 			int jahr, int monat, int tag, int stunde, int minute) {
 		this.bezeichnung = bezeichnung;
 		this.beschreibung = beschreibung;
 		this.ersteller = ersteller;
 		this.kreisId = kreisId;
-		cal.set(jahr, monat, tag, stunde, minute);
+		this.id = id;
+//		cal.set(jahr, monat, tag, stunde, minute);
 	}
 	
 	public String getBezeichnung() {

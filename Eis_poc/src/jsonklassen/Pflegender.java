@@ -10,10 +10,11 @@ public class Pflegender implements IProfil {
 	public Pflegender() {
 	}
 	
-	public Pflegender (String nname, String vname, int kreis) {
+	public Pflegender (String nname, String vname, int kreis, int id) {
 		nName = nname;
 		vName = vname;
 		kreisId = kreis;
+		this.id = id;
 	}
 	
 	

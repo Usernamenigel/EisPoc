@@ -43,7 +43,6 @@ public class ServiceKreis {
 		for(int i = 0; i<jsonlist.size(); i++) {
 			jsonString.add(i, gson.toJson(jsonlist.get(i)));
 		}
-		System.out.println("Hier get"+dv.get(1, 0, 0, db));
 		return gson.toJson(jsonlist);
     }
 	
@@ -56,7 +55,6 @@ public class ServiceKreis {
 	@Path("/{Kid}")
 	@Produces(MediaType.APPLICATION_JSON)
     public String getKreis(@PathParam("Kid") int i) {
-		System.out.println("Hier get"+dv.get(i, 0, 0, db));
         return gson.toJson(dv.get(i, 0, 0, db));
     }
 	
@@ -68,24 +66,21 @@ public class ServiceKreis {
 	@PUT
 	@Path("/{Kid}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addKreis(@PathParam("id") int id, String kreis) {
-		System.out.println("Hier put");
+	public void addKreis(@PathParam("Kid") int id, String kreis) {
 		dv.add(gson.fromJson(kreis, JsonObject.class), db);
 	}
 	
 	@POST
 	@Path("/{Kid}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void setKreis(@PathParam("id") int id, String kreis) {
-		System.out.println("Hier post");
+	public void setKreis(@PathParam("Kid") int id, String kreis) {
 		dv.add(gson.fromJson(kreis, JsonObject.class), db);
 	}
 	
 	@DELETE
 	@Path("/{Kid}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void deleteKreis(@PathParam("id") int id) {
-		System.out.println("Hier delete");
+	public void deleteKreis(@PathParam("Kid") int id) {
 		dv.delete(id, 0, 0, db);
 	}
 }

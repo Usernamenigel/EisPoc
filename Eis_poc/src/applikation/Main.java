@@ -41,37 +41,47 @@ public class Main {
         frameCon.setLocationRelativeTo(null);
         frameCon.setVisible(true);
 		server.serverAn();
-		
 	}
 	
 	private static void fuellen() {
-		Dementer dementer = new Dementer("DementerV", "DementerV", 0, "hat hunger");
-		Pflegender pflegender = new Pflegender("NachName", "Vorname", 0);
-//		Kalender kalender = new Kalender("heute", "bitte putzen", pflegender, 0, 2002, 11, 11, 11, 11);
-		Kalender kalender = new Kalender();
-		Todo todo = new Todo("Bad", "bitte putzen", dementer, 0);
-		Kommentar kommentar = new Kommentar("Das ist ein Kommentar", pflegender);
-		Kreis kreis = new Kreis(0);
+		int durchlaeufe = 10;
 		
-		String dementers = gson.toJson(dementer);
-		String pflegenders = gson.toJson(pflegender);
-		String kalenders = gson.toJson(kalender);
-		String todos = gson.toJson(todo);
-		String kommentars = gson.toJson(kommentar);
-		String kreiss = gson.toJson(kreis);
-		
-		JsonObject dementerj = gson.fromJson(dementers, JsonObject.class);
-		JsonObject pflegenderj = gson.fromJson(pflegenders, JsonObject.class);
-		JsonObject kalenderj = gson.fromJson(kalenders, JsonObject.class);
-		JsonObject todoj = gson.fromJson(todos, JsonObject.class);
-		JsonObject kommentarj = gson.fromJson(kommentars, JsonObject.class);
-		JsonObject kreisj = gson.fromJson(kreiss, JsonObject.class);
-		
-		dv.add(dementerj, "dementer");
-		dv.add(pflegenderj, "pflegender");
-		dv.add(kalenderj, "kalender");
-		dv.add(todoj, "todo");
-		dv.add(kommentarj, "kommentar");
-		dv.add(kreisj, "kreis");
+		for(int i=0; i<durchlaeufe; i++) {
+			
+			Dementer dementer = new Dementer("DementerN"+i, "DementerV"+i, i, i, "hat hunger");
+			String dementers = gson.toJson(dementer);
+			JsonObject dementerj = gson.fromJson(dementers, JsonObject.class);
+			dv.add(dementerj, "dementer");
+			
+			Pflegender pflegender = new Pflegender("NachName"+i, i+"Vorname", i, i);
+			String pflegenders = gson.toJson(pflegender);
+			JsonObject pflegenderj = gson.fromJson(pflegenders, JsonObject.class);
+			dv.add(pflegenderj, "pflegender");
+			
+			Kalender kalender = new Kalender("heute", "bitte putzen", pflegender, i, i, 2002, 11, 11, 11, 11);
+			String kalenders = gson.toJson(kalender);
+			JsonObject kalenderj = gson.fromJson(kalenders, JsonObject.class);
+			dv.add(kalenderj, "kalender");
+			
+			Todo todo = new Todo("Bad"+i, i+"bitte putzen", dementer, i);
+			String todos = gson.toJson(todo);
+			JsonObject todoj = gson.fromJson(todos, JsonObject.class);
+			dv.add(todoj, "todo");
+			
+
+			Kommentar kommentar = new Kommentar("Das ist Kommentar Nr: "+i, pflegender, i, i);
+			String kommentars = gson.toJson(kommentar);
+			JsonObject kommentarj = gson.fromJson(kommentars, JsonObject.class);
+			dv.add(kommentarj, "kommentar");
+
+			Kreis kreis = new Kreis(i);
+			kreis.addPflegender(pflegender);
+			kreis.addKalender(kalender);
+			kreis.addTodo(todo);
+			String kreiss = gson.toJson(kreis);
+			JsonObject kreisj = gson.fromJson(kreiss, JsonObject.class);
+			dv.add(kreisj, "kreis");
+			
+		}
 	}
 }

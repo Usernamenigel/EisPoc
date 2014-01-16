@@ -11,10 +11,11 @@ public class Dementer implements IProfil {
 	public Dementer() {
 	}
 	
-	public Dementer(String Vname, String Nname, int kreis, String beschreibung) {
+	public Dementer(String Vname, String Nname,int id , int kreis, String beschreibung) {
 		nName = Nname;
 		vName = Vname;
 		kreisId = kreis;
+		this.id = id;
 		this.beschreibung = beschreibung;
 	}
 	
