@@ -169,6 +169,11 @@ public class Swing {
 				gibInt(clientTextFieldMonat.getText());
 				gibInt(clientTextFieldJahr.getText());
 				gibInt(clientTextField3.getText());
+				Kalender termin = new Kalender(clientTextField2.getText(), "Toller Tag", new Pflegender(), 5, 0, gibInt(clientTextFieldJahr.getText()),
+						gibInt(clientTextFieldMonat.getText()), gibInt(clientTextFieldTag.getText()), gibInt(clientTextField3.getText()), 00);
+				ClientHandler handler = new ClientHandler();
+				System.out.println("Hallo der termin" + termin.getBezeichnung());
+				handler.sendeTermin(termin, termin.getKreisId(), termin.getId());
 
 			}
 

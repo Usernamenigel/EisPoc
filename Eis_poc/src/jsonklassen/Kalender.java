@@ -47,6 +47,10 @@ public class Kalender {
 		return ersteller;
 	}
 	
+	public int getKreisId() {
+		return kreisId;
+	}
+	
 	/**
 	 * Auch hier musste <IProfil> durch konkrete Klasse ersetzt werden
 	 * da GSON Probleme bereitet

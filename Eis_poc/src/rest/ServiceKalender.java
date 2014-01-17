@@ -61,21 +61,22 @@ public class ServiceKalender {
 	
 	@PUT
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("text/plain")
 	public void addKalender(String kalender) {
+		System.out.println("HALLO ");
 		dv.add(gson.fromJson(kalender, JsonObject.class), db);
 	}
 	
 	@POST
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("text/plain")
 	public void setKalender(String kalender) {
 		dv.set(gson.fromJson(kalender, JsonObject.class), db);
 	}
 	
 	@DELETE
 	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("text/plain")
 	public void deleteKalender(@PathParam("kid") int kid, @PathParam("id") int id) {
 		dv.delete(id, kid, 0, db);
 	}

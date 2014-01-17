@@ -65,21 +65,21 @@ public class ServiceKreis {
 	 */
 	@PUT
 	@Path("/{kid}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("text/plain")
 	public void addKreis(String kreis) {
 		dv.add(gson.fromJson(kreis, JsonObject.class), db);
 	}
 	
 	@POST
 	@Path("/{kid}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("text/plain")
 	public void setKreis(String kreis) {
 		dv.set(gson.fromJson(kreis, JsonObject.class), db);
 	}
 	
 	@DELETE
 	@Path("/{kid}")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes("text/plain")
 	public void deleteKreis(@PathParam("kid") int id) {
 		dv.delete(id, 0, 0, db);
 	}
