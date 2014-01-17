@@ -16,6 +16,7 @@ import jsonklassen.Pflegender;
 import jsonklassen.Todo;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import couch.Datenbankverwaltung;
@@ -34,6 +35,7 @@ public class Swing {
 	static Datenbankverwaltung dv;
 	static Gson gson = new Gson();
 	WebServer server = new WebServer();
+	static ClientHandler handler = new ClientHandler();
 
 	public void an() {
 		JFrame meinFrame = new JFrame("Beispiel JFrame");
@@ -122,14 +124,26 @@ public class Swing {
 		JLabel clientTag = new JLabel("Tag");
 		JLabel clientMonat = new JLabel("Monat");
 		JLabel clientJahr = new JLabel("Jahr");
-
 		JLabel clientUhrzeit = new JLabel("Uhrzeit");
-
+		JLabel clientKreisId = new JLabel("Kreis-ID");
+		JLabel clientKalenderId = new JLabel("Kalender-ID");
+		
+		
 		clientThema.setBounds(50, 30, 50, 25);
 		clientTag.setBounds(50, 80, 50, 25);
 		clientMonat.setBounds(150, 80, 50, 25);		
 		clientJahr.setBounds(250, 80, 50, 25);
 		clientUhrzeit.setBounds(50, 130, 50, 25);
+		clientKreisId.setBounds(50, 200, 80, 25);
+		clientKalenderId.setBounds(50, 230, 80, 25);
+		
+		final JTextField clientTextFieldKreis = new JTextField();
+		clientTextFieldKreis.setBounds(130, 200, 80, 25);
+		clientTextFieldKreis.setBorder(BorderFactory.createEtchedBorder());
+		
+		final JTextField clientTextFieldKalender = new JTextField();
+		clientTextFieldKalender.setBounds(130, 230, 80, 25);
+		clientTextFieldKalender.setBorder(BorderFactory.createEtchedBorder());
 		
 		final JTextField clientTextField2 = new JTextField();
 		clientTextField2.setBounds(50, 50, 300, 25);
@@ -152,7 +166,9 @@ public class Swing {
 		clientTextField3.setBorder(BorderFactory.createEtchedBorder());
 
 		JButton clientButton = new JButton("Fertig");
-		clientButton.setBounds(340, 370, 50, 50);
+		clientButton.setBounds(300, 320, 75, 75);
+		JButton clientButtonHole = new JButton("Alles holen");
+		clientButtonHole.setBounds(0, 320, 200, 75);
 
 		JPanel clientPanel = new JPanel();
 		clientPanel.setLayout(null);
@@ -161,23 +177,24 @@ public class Swing {
 		clientButton.addActionListener(new ActionListener() {
 			// Action wenn Button "Client" gedrueckt wird
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("clientButton wurde gedrieckt");
-				// String meinWert = clientTextField.getText();
-				// System.out.println("Text aus Feld:"+meinWert);
-				gibString(clientTextField2.getText());
-				gibInt(clientTextFieldTag.getText());
-				gibInt(clientTextFieldMonat.getText());
-				gibInt(clientTextFieldJahr.getText());
-				gibInt(clientTextField3.getText());
-				Kalender termin = new Kalender(clientTextField2.getText(), "Toller Tag", new Pflegender(), 5, 0, gibInt(clientTextFieldJahr.getText()),
+				Kalender termin = new Kalender(clientTextField2.getText(), "Toller Tag", new Pflegender(), gibInt(clientTextFieldKreis.getText()),
+						gibInt(clientTextFieldKalender.getText()), gibInt(clientTextFieldJahr.getText()),
 						gibInt(clientTextFieldMonat.getText()), gibInt(clientTextFieldTag.getText()), gibInt(clientTextField3.getText()), 00);
-				ClientHandler handler = new ClientHandler();
 				System.out.println("Hallo der termin" + termin.getBezeichnung());
 				handler.sendeTermin(termin, termin.getKreisId(), termin.getId());
 
 			}
 
 		});
+		
+		clientButtonHole.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JsonArray jarray = new JsonArray();
+				jarray = handler.holeTermine(gibInt(clientTextFieldKreis.getText()));
+			}
+		});
+		
+		
 
 		clientPanel.add(clientThema);
 		clientPanel.add(clientTag);
@@ -185,11 +202,16 @@ public class Swing {
 		clientPanel.add(clientJahr);
 		clientPanel.add(clientUhrzeit);
 		clientPanel.add(clientButton);
+		clientPanel.add(clientButtonHole);
 		clientPanel.add(clientTextFieldTag);
 		clientPanel.add(clientTextFieldMonat);
 		clientPanel.add(clientTextFieldJahr);
 		clientPanel.add(clientTextField2);
 		clientPanel.add(clientTextField3);
+		clientPanel.add(clientKreisId);
+		clientPanel.add(clientKalenderId);
+		clientPanel.add(clientTextFieldKalender);
+		clientPanel.add(clientTextFieldKreis);
 
 		// meinFrame2.add(clientThema);
 		meinFrame2.add(clientPanel);
@@ -252,4 +274,5 @@ public class Swing {
 			dv.add(kreisj, "kreis");
 		}
 	}
+
 }
