@@ -224,14 +224,6 @@ public class Swing {
 	
 	public static Integer gibInt(String text) {
 		Integer dieDaten = Integer.valueOf(text);
-		
-//		if(dieDaten == null){
-//			System.out.println("Sir, Sie haben nichts eingetragen");
-//			return 0;
-//			}
-//		else{
-//		//String derInteger = text;
-////		Integer dieDaten = Integer.valueOf(text);
 		System.out.println("Der Integer "+dieDaten);
 		return dieDaten;
 		//}

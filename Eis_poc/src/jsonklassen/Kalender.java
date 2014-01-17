@@ -1,5 +1,7 @@
 package jsonklassen;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +22,10 @@ public class Kalender {
 	int kreisId;
 	int id;
 	Calendar cal;
+	DateFormat dateformatter = new SimpleDateFormat();
 	
 	public Kalender() {
+		DateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy"); 
 		Calendar cal = Calendar.getInstance();
 	}
 	
@@ -32,7 +36,10 @@ public class Kalender {
 		this.ersteller = ersteller;
 		this.kreisId = kreisId;
 		this.id = id;
-//		cal.set(jahr, monat, tag, stunde, minute);
+		DateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar cal = Calendar.getInstance();
+		cal.set(jahr, monat, tag, stunde, minute);
+
 	}
 	
 	public String getBezeichnung() {
