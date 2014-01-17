@@ -1,6 +1,7 @@
 package jsonklassen;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,30 +16,26 @@ public class Kalender {
 	 */
 	String bezeichnung;
 	String beschreibung;
-	IProfil ersteller;
+	Dementer ersteller;
 	List<Pflegender> teilnehmer;
 	List<Pflegender> verfuegbar;	
 	List<Kommentar> kommentar;
 	int kreisId;
 	int id;
-	Calendar cal;
-	DateFormat dateformatter = new SimpleDateFormat();
-	
-	public Kalender() {
-		DateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy"); 
-		Calendar cal = Calendar.getInstance();
-	}
-	
-	public Kalender(String bezeichnung, String beschreibung, IProfil ersteller, int kreisId, int id,
+	int jahr, monat, tag, stunde, minute;
+		
+	public Kalender(String bezeichnung, String beschreibung, Dementer ersteller, int kreisId, int id,
 			int jahr, int monat, int tag, int stunde, int minute) {
 		this.bezeichnung = bezeichnung;
 		this.beschreibung = beschreibung;
 		this.ersteller = ersteller;
 		this.kreisId = kreisId;
 		this.id = id;
-		DateFormat dateformatter = new SimpleDateFormat("dd-MM-yyyy");
-		Calendar cal = Calendar.getInstance();
-		cal.set(jahr, monat, tag, stunde, minute);
+		this.jahr = jahr;
+		this.monat = monat;
+		this.tag = tag;
+		this.stunde = stunde;
+		this.minute = minute;
 
 	}
 	
@@ -79,12 +76,25 @@ public class Kalender {
 		return id;
 	}
 	
-	public Calendar getKalender() {
-		return cal;
+	public int getJahr() {
+		return jahr;
 	}
 	
-	public void setKalendar(int jahr, int monat, int tag, int stunde, int minute) {
-		cal.set(jahr, monat, tag, stunde, minute);
+	public int getMonat() {
+		return monat;
 	}
+		
+	public int getTag() {
+		return tag;
+	}
+	
+	public int getStunde() {
+		return stunde;
+	}
+	
+	public int getMinute() {
+		return minute;
+	}
+	
 }
 

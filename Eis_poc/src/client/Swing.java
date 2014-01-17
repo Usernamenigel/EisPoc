@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.*;
 
@@ -36,8 +39,11 @@ public class Swing {
 	static Gson gson = new Gson();
 	WebServer server = new WebServer();
 	static ClientHandler handler = new ClientHandler();
-
+	static JTextArea consoleTextArea = new JTextArea();
+	static DateFormat sdf;
+	
 	public void an() {
+		DateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		JFrame meinFrame = new JFrame("Beispiel JFrame");
 		meinFrame.setSize(400, 450);
 		meinFrame.setLocation(300, 100);
@@ -98,6 +104,7 @@ public class Swing {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("ClientButton");
 				oeffneClient();
+				oeffneConsole();
 			}
 		});
 
@@ -177,12 +184,13 @@ public class Swing {
 		clientButton.addActionListener(new ActionListener() {
 			// Action wenn Button "Client" gedrueckt wird
 			public void actionPerformed(ActionEvent e) {
-				Kalender termin = new Kalender(clientTextField2.getText(), "Toller Tag", new Pflegender(), gibInt(clientTextFieldKreis.getText()),
+				Kalender termin = new Kalender(clientTextField2.getText(), "Toller Tag", new Dementer(), gibInt(clientTextFieldKreis.getText()),
 						gibInt(clientTextFieldKalender.getText()), gibInt(clientTextFieldJahr.getText()),
 						gibInt(clientTextFieldMonat.getText()), gibInt(clientTextFieldTag.getText()), gibInt(clientTextField3.getText()), 00);
-				System.out.println("Hallo der termin" + termin.getBezeichnung());
 				handler.sendeTermin(termin, termin.getKreisId(), termin.getId());
-			
+				consoleTextArea.append("Eintrag eingetragen \n");
+				consoleTextArea.append(gson.toJson(termin)+"\n");
+				consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
 			}
 
 		});
@@ -191,6 +199,14 @@ public class Swing {
 			public void actionPerformed(ActionEvent e) {
 				JsonArray jarray = new JsonArray();
 				jarray = handler.holeTermine(gibInt(clientTextFieldKreis.getText()));
+				consoleTextArea.append("Folgende Termine aus Kreis Nr: " + gibInt(clientTextFieldKreis.getText()) + " wurden geholt\n");
+				for(int i=0; i<jarray.size(); i++) {
+					Kalender k = gson.fromJson(jarray.get(i), Kalender.class);
+					consoleTextArea.append("ID: " + k.getId() + " /Titel: " + k.getBezeichnung() + "/Beschreibung: " + k.getBeschreibung() + "\n");
+					consoleTextArea.append("Datum und Uhrzeit: " + k.getJahr() + "-"+ k.getMonat() + "-" + 
+					k.getTag() + " - "+ k.getStunde() + ":" + k.getMinute() + "\n");
+					consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
+				}
 			}
 		});
 		
@@ -212,6 +228,7 @@ public class Swing {
 		clientPanel.add(clientKalenderId);
 		clientPanel.add(clientTextFieldKalender);
 		clientPanel.add(clientTextFieldKreis);
+		
 
 		// meinFrame2.add(clientThema);
 		meinFrame2.add(clientPanel);
@@ -219,12 +236,22 @@ public class Swing {
 	}
 
 	private void oeffneConsole() {
-		
+		Frame meinFrame3 = new JFrame("This Console !");
+		meinFrame3.setSize(800, 200);
+		meinFrame3.setLocation(300, 580);
+		consoleTextArea.setBounds(10, 10, 780, 160);
+		consoleTextArea.setBorder(BorderFactory.createEtchedBorder());
+		JButton testButton = new JButton("testButton");
+		JPanel consolePanel = new JPanel();
+		consolePanel.setLayout(null);
+		consolePanel.add(consoleTextArea);
+		consolePanel.add(testButton);
+		meinFrame3.add(consolePanel);
+		meinFrame3.setVisible(true);
 	}
 	
 	public static Integer gibInt(String text) {
 		Integer dieDaten = Integer.valueOf(text);
-		System.out.println("Der Integer "+dieDaten);
 		return dieDaten;
 		//}
 	}
@@ -246,7 +273,7 @@ public class Swing {
 			JsonObject pflegenderj = gson.fromJson(pflegenders,JsonObject.class);
 			dv.add(pflegenderj, "pflegender");
 
-			Kalender kalender = new Kalender("heute", "bitte putzen", pflegender, i, i, 2002, 11, 11, 11, 11);
+			Kalender kalender = new Kalender("Sauberkeit", "bitte putzen", dementer, i, i, 2000+i, 1+i, 1+i, 1+i, 1+i);
 			String kalenders = gson.toJson(kalender);
 			JsonObject kalenderj = gson.fromJson(kalenders, JsonObject.class);
 			dv.add(kalenderj, "kalender");
