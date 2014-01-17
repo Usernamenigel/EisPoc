@@ -119,24 +119,36 @@ public class Swing {
 		meinFrame2.setSize(400, 450);
 		meinFrame2.setLocation(800, 100);
 		JLabel clientThema = new JLabel("Thema");
+		JLabel clientTag = new JLabel("Tag");
+		JLabel clientMonat = new JLabel("Monat");
+		JLabel clientJahr = new JLabel("Jahr");
 
-		JLabel clientDatum = new JLabel("Datum");
 		JLabel clientUhrzeit = new JLabel("Uhrzeit");
 
 		clientThema.setBounds(50, 30, 50, 25);
-		clientDatum.setBounds(50, 80, 50, 25);
+		clientTag.setBounds(50, 80, 50, 25);
+		clientMonat.setBounds(150, 80, 50, 25);		
+		clientJahr.setBounds(250, 80, 50, 25);
 		clientUhrzeit.setBounds(50, 130, 50, 25);
-
-		final JTextField clientTextField = new JTextField();
-		clientTextField.setBounds(50, 50, 300, 25);
-		clientTextField.setBorder(BorderFactory.createEtchedBorder());
-
+		
 		final JTextField clientTextField2 = new JTextField();
-		clientTextField2.setBounds(50, 100, 300, 25);
+		clientTextField2.setBounds(50, 50, 300, 25);
 		clientTextField2.setBorder(BorderFactory.createEtchedBorder());
 
+		final JTextField clientTextFieldTag = new JTextField();
+		clientTextFieldTag.setBounds(50, 100, 50, 25);
+		clientTextFieldTag.setBorder(BorderFactory.createEtchedBorder());
+		
+		final JTextField clientTextFieldMonat = new JTextField();
+		clientTextFieldMonat.setBounds(150, 100, 50, 25);
+		clientTextFieldMonat.setBorder(BorderFactory.createEtchedBorder());
+		
+		final JTextField clientTextFieldJahr = new JTextField();
+		clientTextFieldJahr.setBounds(250, 100, 50, 25);
+		clientTextFieldJahr.setBorder(BorderFactory.createEtchedBorder());
+
 		final JTextField clientTextField3 = new JTextField();
-		clientTextField3.setBounds(50, 150, 300, 25);
+		clientTextField3.setBounds(50, 150, 50, 25);
 		clientTextField3.setBorder(BorderFactory.createEtchedBorder());
 
 		JButton clientButton = new JButton("Fertig");
@@ -152,19 +164,25 @@ public class Swing {
 				System.out.println("clientButton wurde gedrieckt");
 				// String meinWert = clientTextField.getText();
 				// System.out.println("Text aus Feld:"+meinWert);
-				gibString(clientTextField.getText());
 				gibString(clientTextField2.getText());
-				gibString(clientTextField3.getText());
+				gibInt(clientTextFieldTag.getText());
+				gibInt(clientTextFieldMonat.getText());
+				gibInt(clientTextFieldJahr.getText());
+				gibInt(clientTextField3.getText());
 
 			}
 
 		});
 
 		clientPanel.add(clientThema);
-		clientPanel.add(clientDatum);
+		clientPanel.add(clientTag);
+		clientPanel.add(clientMonat);
+		clientPanel.add(clientJahr);
 		clientPanel.add(clientUhrzeit);
 		clientPanel.add(clientButton);
-		clientPanel.add(clientTextField);
+		clientPanel.add(clientTextFieldTag);
+		clientPanel.add(clientTextFieldMonat);
+		clientPanel.add(clientTextFieldJahr);
 		clientPanel.add(clientTextField2);
 		clientPanel.add(clientTextField3);
 
@@ -173,9 +191,23 @@ public class Swing {
 		meinFrame2.setVisible(true);
 	}
 
+	public static Integer gibInt(String text) {
+		Integer dieDaten = Integer.valueOf(text);
+		
+//		if(dieDaten == null){
+//			System.out.println("Sir, Sie haben nichts eingetragen");
+//			return 0;
+//			}
+//		else{
+//		//String derInteger = text;
+////		Integer dieDaten = Integer.valueOf(text);
+		System.out.println("Der Integer "+dieDaten);
+		return dieDaten;
+		//}
+	}
 	public static void gibString(String text) {
-		String dasDatum = text;
-		System.out.println("Text aus Feld: " + dasDatum);
+		
+		System.out.println("Text aus Feld: " + text);
 	}
 
 	private static void fuellen() {
