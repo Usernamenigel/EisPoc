@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import jsonklassen.Kalender;
+import jsonklassen.Meinkalender;
 import alteKlassen.Profile;
 
 /**
@@ -66,11 +67,41 @@ public class ClientHandler {
 		return jsonobject;
 	}
 	
-	protected void vergleicheTermine(List<Kalender> list1, List<Kalender> list2) {
-		
+	protected boolean vergleicheTermin(Kalender k, Meinkalender mk) {
+		if(k.getTag() == mk.getTag() && k.getMonat() == mk.getMonat() && k.getJahr() == mk.getJahr()) {
+			return hilfe(mk, k);
+		}
+		else {
+			return true;
+		}
 	}
 	
-	
-	
-
+//	protected boolean vergleicheTermine(Kalender kalender, List<Meinkalender> list) {
+//		for(Meinkalender mk: list) {
+//			if(kalender.getJahr() == mk.getJahr() && kalender.getMonat() == mk.getMonat() && kalender.getTag() == mk.getTag()) {
+//				return hilfe(mk, kalender);
+//			}
+//			else if(kalender.getMonat() == mk.getMonat() && kalender.getTag() == mk.getTag()) {
+//				return hilfe(mk, kalender);
+//			}
+//			else if(kalender.getTag() == mk.getTag()) {
+//				return hilfe(mk, kalender);
+//			}
+//			else {
+//				return true;
+//			}
+//		}
+//		return true;
+//	}
+//	
+	private boolean hilfe(Meinkalender mk, Kalender kalender) {
+			if(mk.getStunde() < kalender.getStunde() && (mk.getStunde() + mk.getDauer() < kalender.getStunde()) ) {
+				return true;
+			}
+			else if(mk.getStunde() > (kalender.getStunde()+kalender.getDauer())) {
+				return true;
+			}
+			return false;
+		}
+		
 }

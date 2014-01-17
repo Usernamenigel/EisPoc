@@ -15,6 +15,7 @@ import jsonklassen.Dementer;
 import jsonklassen.Kalender;
 import jsonklassen.Kommentar;
 import jsonklassen.Kreis;
+import jsonklassen.Meinkalender;
 import jsonklassen.Pflegender;
 import jsonklassen.Todo;
 
@@ -24,6 +25,12 @@ import com.google.gson.JsonObject;
 
 import couch.Datenbankverwaltung;
 
+
+/**
+ * Aus zeitlichen Gründen ist diese Klasse leider sehr unaufgeräumt.
+ * Schlecht kommentiert / dokumentiert
+ * Scroolbar der Statuskonsole funktioniert nicht 
+ * */
 public class Swing {
 
 	private JFrame meinFrame2;
@@ -35,12 +42,17 @@ public class Swing {
 	private JTextArea meineTextArea;
 	private JTextField clientTextField, clienttextField2, clienttextField3;
 	private JLabel clientDatum, clientUhrzeit, clientThema;
+	Frame meinFrame3 = new JFrame();
 	static Datenbankverwaltung dv;
 	static Gson gson = new Gson();
 	WebServer server = new WebServer();
 	static ClientHandler handler = new ClientHandler();
 	static JTextArea consoleTextArea = new JTextArea();
 	static DateFormat sdf;
+	Dementer dementer;
+	Pflegender pflegender;
+	static boolean hatZeit;
+	Meinkalender mk1;
 	
 	public void an() {
 		DateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
@@ -104,7 +116,9 @@ public class Swing {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("ClientButton");
 				oeffneClient();
-				oeffneConsole();
+				if(!meinFrame3.isVisible()) {
+					oeffneConsole();
+				}
 			}
 		});
 
@@ -123,7 +137,7 @@ public class Swing {
 	}
 
 	private static void oeffneClient() {
-
+		
 		JFrame meinFrame2 = new JFrame("This Client !");
 		meinFrame2.setSize(400, 450);
 		meinFrame2.setLocation(800, 100);
@@ -132,6 +146,7 @@ public class Swing {
 		JLabel clientMonat = new JLabel("Monat");
 		JLabel clientJahr = new JLabel("Jahr");
 		JLabel clientUhrzeit = new JLabel("Uhrzeit");
+		JLabel clientBis = new JLabel("Dauer");
 		JLabel clientKreisId = new JLabel("Kreis-ID");
 		JLabel clientKalenderId = new JLabel("Kalender-ID");
 		
@@ -143,6 +158,7 @@ public class Swing {
 		clientUhrzeit.setBounds(50, 130, 50, 25);
 		clientKreisId.setBounds(50, 200, 80, 25);
 		clientKalenderId.setBounds(50, 230, 80, 25);
+		clientBis.setBounds(150, 130, 50, 25);
 		
 		final JTextField clientTextFieldKreis = new JTextField();
 		clientTextFieldKreis.setBounds(130, 200, 80, 25);
@@ -159,6 +175,10 @@ public class Swing {
 		final JTextField clientTextFieldTag = new JTextField();
 		clientTextFieldTag.setBounds(50, 100, 50, 25);
 		clientTextFieldTag.setBorder(BorderFactory.createEtchedBorder());
+		
+		final JTextField clientTextFieldBis = new JTextField();
+		clientTextFieldBis.setBounds(150, 150, 50, 25);
+		clientTextFieldBis.setBorder(BorderFactory.createEtchedBorder());
 		
 		final JTextField clientTextFieldMonat = new JTextField();
 		clientTextFieldMonat.setBounds(150, 100, 50, 25);
@@ -186,7 +206,7 @@ public class Swing {
 			public void actionPerformed(ActionEvent e) {
 				Kalender termin = new Kalender(clientTextField2.getText(), "Toller Tag", new Dementer(), gibInt(clientTextFieldKreis.getText()),
 						gibInt(clientTextFieldKalender.getText()), gibInt(clientTextFieldJahr.getText()),
-						gibInt(clientTextFieldMonat.getText()), gibInt(clientTextFieldTag.getText()), gibInt(clientTextField3.getText()), 00);
+						gibInt(clientTextFieldMonat.getText()), gibInt(clientTextFieldTag.getText()), gibInt(clientTextField3.getText()), 00, gibInt(clientTextFieldBis.getText()));
 				handler.sendeTermin(termin, termin.getKreisId(), termin.getId());
 				consoleTextArea.append("Eintrag eingetragen \n");
 				consoleTextArea.append(gson.toJson(termin)+"\n");
@@ -195,21 +215,38 @@ public class Swing {
 
 		});
 		
+		Pflegender hans = new Pflegender("Hans", "Peter", 0, 0);
+		
+		final Meinkalender mk1 = new Meinkalender(2014, 01, 01, 10, 10, 10);
+		
+//		hans.addKalenderEintrag(kal);
+		
 		clientButtonHole.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JsonArray jarray = new JsonArray();
 				jarray = handler.holeTermine(gibInt(clientTextFieldKreis.getText()));
-				consoleTextArea.append("Folgende Termine aus Kreis Nr: " + gibInt(clientTextFieldKreis.getText()) + " wurden geholt\n");
 				for(int i=0; i<jarray.size(); i++) {
 					Kalender k = gson.fromJson(jarray.get(i), Kalender.class);
-					consoleTextArea.append("ID: " + k.getId() + " /Titel: " + k.getBezeichnung() + "/Beschreibung: " + k.getBeschreibung() + "\n");
-					consoleTextArea.append("Datum und Uhrzeit: " + k.getJahr() + "-"+ k.getMonat() + "-" + 
-					k.getTag() + " - "+ k.getStunde() + ":" + k.getMinute() + "\n");
-					consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
+					if(handler.vergleicheTermin(k, mk1)) {
+						hatZeit = false;
+					}
+					if(hatZeit == false) {
+						consoleTextArea.append("Hat leider keine Zeit");
+					}
 				}
+				consoleTextArea.append("Wunderbar hat Zeit");
+				
 			}
 		});
 		
+//		consoleTextArea.append("Folgende Termine aus Kreis Nr: " + gibInt(clientTextFieldKreis.getText()) + " wurden geholt\n");
+//		for(int i=0; i<jarray.size(); i++) {
+//			Kalender k = gson.fromJson(jarray.get(i), Kalender.class);
+//			consoleTextArea.append("ID: " + k.getId() + " /Titel: " + k.getBezeichnung() + "/Beschreibung: " + k.getBeschreibung() + "\n");
+//			consoleTextArea.append("Datum und Uhrzeit: " + k.getJahr() + "-"+ k.getMonat() + "-" + 
+//			k.getTag() + " - "+ k.getStunde() + ":" + k.getMinute() + "\n");
+//			consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
+//		}
 		
 
 		clientPanel.add(clientThema);
@@ -227,6 +264,8 @@ public class Swing {
 		clientPanel.add(clientKreisId);
 		clientPanel.add(clientKalenderId);
 		clientPanel.add(clientTextFieldKalender);
+		clientPanel.add(clientTextFieldBis);
+		clientPanel.add(clientBis);
 		clientPanel.add(clientTextFieldKreis);
 		
 
@@ -261,19 +300,19 @@ public class Swing {
 	}
 
 	private static void fuellen() {
-		int durchlaeufe = 10;
-		for (int i = 0; i < durchlaeufe; i++) {
+		int durchlaeufe = 11;
+		for (int i = 1; i < durchlaeufe; i++) {
 			Dementer dementer = new Dementer("DementerN" + i, "DementerV" + i, i, i, "hat hunger");
 			String dementers = gson.toJson(dementer);
 			JsonObject dementerj = gson.fromJson(dementers, JsonObject.class);
 			dv.add(dementerj, "dementer");
-
+			
 			Pflegender pflegender = new Pflegender("NachName" + i, i+ "Vorname", i, i);
 			String pflegenders = gson.toJson(pflegender);
 			JsonObject pflegenderj = gson.fromJson(pflegenders,JsonObject.class);
 			dv.add(pflegenderj, "pflegender");
 
-			Kalender kalender = new Kalender("Sauberkeit", "bitte putzen", dementer, i, i, 2000+i, 1+i, 1+i, 1+i, 1+i);
+			Kalender kalender = new Kalender("Sauberkeit", "bitte putzen", dementer, i, i, 2000+i, 1+i, 1+i, 1+i, 1+i, 3%i);
 			String kalenders = gson.toJson(kalender);
 			JsonObject kalenderj = gson.fromJson(kalenders, JsonObject.class);
 			dv.add(kalenderj, "kalender");

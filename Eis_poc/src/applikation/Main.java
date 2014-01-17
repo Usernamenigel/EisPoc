@@ -35,6 +35,5 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		Swing anwendung = new Swing();
 		anwendung.an();
-		Kalender kalender = new Kalender("hur", "dur", new Dementer(), 0, 0, 1990, 12, 12, 12, 12);
 	}
 }

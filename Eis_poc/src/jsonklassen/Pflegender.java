@@ -1,7 +1,11 @@
 package jsonklassen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pflegender implements IProfil {
 
+	List<Meinkalender> meinkalender;
 	String nName;
 	String vName;
 	int kreisId;
@@ -11,12 +15,20 @@ public class Pflegender implements IProfil {
 	}
 	
 	public Pflegender (String nname, String vname, int kreis, int id) {
+		meinkalender = new ArrayList<Meinkalender>();
 		nName = nname;
 		vName = vname;
 		kreisId = kreis;
 		this.id = id;
 	}
 	
+	public void addKalenderEintrag(Meinkalender kal) {
+		meinkalender.add(kal);
+	}
+	
+	public List<Meinkalender> getKal() {
+		return meinkalender;
+	}
 	
 	public String getNname() {
 		return nName;

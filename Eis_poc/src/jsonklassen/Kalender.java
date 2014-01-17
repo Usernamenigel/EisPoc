@@ -20,12 +20,17 @@ public class Kalender {
 	List<Pflegender> teilnehmer;
 	List<Pflegender> verfuegbar;	
 	List<Kommentar> kommentar;
+	int dauer;
 	int kreisId;
 	int id;
 	int jahr, monat, tag, stunde, minute;
+	
+	public Kalender() {
+		
+	}
 		
 	public Kalender(String bezeichnung, String beschreibung, Dementer ersteller, int kreisId, int id,
-			int jahr, int monat, int tag, int stunde, int minute) {
+			int jahr, int monat, int tag, int stunde, int minute, int dauer) {
 		this.bezeichnung = bezeichnung;
 		this.beschreibung = beschreibung;
 		this.ersteller = ersteller;
@@ -36,6 +41,7 @@ public class Kalender {
 		this.tag = tag;
 		this.stunde = stunde;
 		this.minute = minute;
+		this.dauer = dauer;
 
 	}
 	
@@ -86,6 +92,10 @@ public class Kalender {
 		
 	public int getTag() {
 		return tag;
+	}
+	
+	public int getDauer() {
+		return dauer;
 	}
 	
 	public int getStunde() {
