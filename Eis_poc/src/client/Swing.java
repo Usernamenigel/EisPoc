@@ -182,7 +182,7 @@ public class Swing {
 						gibInt(clientTextFieldMonat.getText()), gibInt(clientTextFieldTag.getText()), gibInt(clientTextField3.getText()), 00);
 				System.out.println("Hallo der termin" + termin.getBezeichnung());
 				handler.sendeTermin(termin, termin.getKreisId(), termin.getId());
-
+			
 			}
 
 		});
@@ -218,6 +218,10 @@ public class Swing {
 		meinFrame2.setVisible(true);
 	}
 
+	private void oeffneConsole() {
+		
+	}
+	
 	public static Integer gibInt(String text) {
 		Integer dieDaten = Integer.valueOf(text);
 		
