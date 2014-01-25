@@ -15,7 +15,6 @@ import jsonklassen.Dementer;
 import jsonklassen.Kalender;
 import jsonklassen.Kommentar;
 import jsonklassen.Kreis;
-import jsonklassen.Meinkalender;
 import jsonklassen.Pflegender;
 import jsonklassen.Todo;
 
@@ -25,79 +24,69 @@ import com.google.gson.JsonObject;
 
 import couch.Datenbankverwaltung;
 
-
-/**
- * Aus zeitlichen Gründen ist diese Klasse leider sehr unaufgeräumt.
- * Schlecht kommentiert / dokumentiert
- * Scroolbar der Statuskonsole funktioniert nicht 
- * */
 public class Swing {
 
-	private JFrame meinFrame2;
-	private JButton meinButton1, meinButton2, meinButton3;
-	private JButton clientButton1, clientButton2;
-	private JPanel meinPanel, clientPanel;
+	private JFrame frameDementer;
+	private JButton btnDb, btnServer, btnDementerStart, btnPflegender, btnDbFuellen;
+	private JPanel panelStart, panelDementer;
 	private GridBagLayout glo;
 	private Container container;
 	private JTextArea meineTextArea;
 	private JTextField clientTextField, clienttextField2, clienttextField3;
-	private JLabel clientDatum, clientUhrzeit, clientThema;
-	Frame meinFrame3 = new JFrame();
+	private JLabel clientDatum, dementerUhrzeit, dementerThema;
 	static Datenbankverwaltung dv;
 	static Gson gson = new Gson();
 	WebServer server = new WebServer();
 	static ClientHandler handler = new ClientHandler();
 	static JTextArea consoleTextArea = new JTextArea();
 	static DateFormat sdf;
-	Dementer dementer;
-	Pflegender pflegender;
-	static boolean hatZeit;
-	Meinkalender mk1;
 	
 	public void an() {
-		DateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-		JFrame meinFrame = new JFrame("Beispiel JFrame");
-		meinFrame.setSize(400, 450);
-		meinFrame.setLocation(300, 100);
-		meinFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JFrame frameStart = new JFrame("Beispiel JFrame");
+		frameStart.setSize(400, 450);
+		frameStart.setLocation(300, 100);
+		frameStart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// JTextArea meineTextArea = new JTextArea();
-		// meineTextArea.setBounds(50, 300, 300, 50);
-		// meineTextArea.setBorder(BorderFactory.createEtchedBorder());
+		//Knöpfe
+		btnDb = new JButton("Datenbank starten");
+		btnServer = new JButton("Server starten");
+		btnDementerStart = new JButton("Dementer Clien");
+		btnPflegender = new JButton("Pflegenden Client");
+		btnDbFuellen = new JButton("DB Fuellen");
 
-		final JButton meinButton1 = new JButton("Datenbank starten");
-		final JButton meinButton2 = new JButton("Server starten");
-		JButton meinButton3 = new JButton("Client hinzufuegen");
-		final JButton meinButton4 = new JButton("DB Fuellen");
+		//Knopfe konfigurieren
+		btnDb.setBounds(50, 50, 220, 50);
+		btnDb.setEnabled(true);
+		btnServer.setBounds(50, 150, 300, 50);
+		btnDementerStart.setBounds(50, 250, 125, 50);
+		btnPflegender.setBounds(225, 250, 125, 50);
+		btnDbFuellen.setBounds(270, 50, 80, 50);
+		btnDbFuellen.setEnabled(false);
 
-		meinButton1.setBounds(50, 50, 220, 50);
-		meinButton1.setEnabled(true);
-		meinButton2.setBounds(50, 150, 300, 50);
-		meinButton3.setBounds(50, 250, 300, 50);
-		meinButton4.setBounds(270, 50, 80, 50);
-		meinButton4.setEnabled(false);
+		JPanel panelStart = new JPanel();
+		panelStart.setLayout(null);
 
-		JPanel meinPanel = new JPanel();
-		meinPanel.setLayout(null);
+		panelStart.add(btnPflegender);
+		panelStart.add(btnDb);
+		panelStart.add(btnServer);
+		panelStart.add(btnDementerStart);
+		panelStart.add(btnDbFuellen);
 
-		meinPanel.add(meinButton1);
-		meinPanel.add(meinButton2);
-		meinPanel.add(meinButton3);
-		meinPanel.add(meinButton4);
-
+		/**
+		 * ACTION LISTENER
+		 */
 		// Button Datenbank
-		meinButton1.addActionListener(new ActionListener() {
+		btnDb.addActionListener(new ActionListener() {
 			// Action wenn Button "Datenbank" gedrueckt wird
 			public void actionPerformed(ActionEvent e) {
 				dv = new Datenbankverwaltung();
-				meinButton1.setEnabled(false);
-				meinButton4.setEnabled(true);
+				btnDb.setEnabled(false);
+				btnDbFuellen.setEnabled(true);
 			}
 		});
+		
 		// Button Server
-		meinButton2.addActionListener(new ActionListener() {
-
-			// Action wenn Button "Client" gedrueckt wird
+		btnServer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					server.serverAn();
@@ -106,107 +95,179 @@ public class Swing {
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				meinButton2.setEnabled(false);
+				btnServer.setEnabled(false);
 			}
 		});
 
-		// Button Client
-		meinButton3.addActionListener(new ActionListener() {
-			// Action wenn Button "Client" gedrŸckt wird
+		// Button Dementer
+		btnDementerStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ClientButton");
-				oeffneClient();
-				if(!meinFrame3.isVisible()) {
-					oeffneConsole();
-				}
+				oeffneDementer();
 			}
 		});
+		
+		// Button Pflegender
+				btnPflegender.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						oeffnePflegender();
+					}
+				});
 
 		// Button Fuellen
-		meinButton4.addActionListener(new ActionListener() {
-			// Action wenn Button "Datenbank" gedrueckt wird
+		btnDbFuellen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fuellen();
 			}
 
 		});
 
-		meinFrame.add(meinPanel);
-		meinFrame.setTitle("Startmenue");
-		meinFrame.setVisible(true);
+		frameStart.add(panelStart);
+		frameStart.setTitle("Startmenue");
+		frameStart.setVisible(true);
 	}
 
-	private static void oeffneClient() {
+	
+	protected void oeffnePflegender() {
+				
+		  // Die Daten für das Table
+	    String[] titel =  {
+	      "Name", "Hat Zeit"
+	    };
+	    
+		String[][] daten = {
+			    { "Japan", "245" }, { "USA", "240" }, { "Italien", "220" },
+			    { "Spanien", "217" }, {"Türkei", "215"} ,{ "England", "214" },
+			    { "Frankreich", "190" }, {"Griechenland", "185" },
+			    { "Deutschland", "180" }, {"Portugal", "170" }
+			    };
 		
-		JFrame meinFrame2 = new JFrame("This Client !");
-		meinFrame2.setSize(400, 450);
-		meinFrame2.setLocation(800, 100);
-		JLabel clientThema = new JLabel("Thema");
-		JLabel clientTag = new JLabel("Tag");
-		JLabel clientMonat = new JLabel("Monat");
-		JLabel clientJahr = new JLabel("Jahr");
-		JLabel clientUhrzeit = new JLabel("Uhrzeit");
-		JLabel clientBis = new JLabel("Dauer");
-		JLabel clientKreisId = new JLabel("Kreis-ID");
-		JLabel clientKalenderId = new JLabel("Kalender-ID");
-		
-		
-		clientThema.setBounds(50, 30, 50, 25);
-		clientTag.setBounds(50, 80, 50, 25);
-		clientMonat.setBounds(150, 80, 50, 25);		
-		clientJahr.setBounds(250, 80, 50, 25);
-		clientUhrzeit.setBounds(50, 130, 50, 25);
-		clientKreisId.setBounds(50, 200, 80, 25);
-		clientKalenderId.setBounds(50, 230, 80, 25);
-		clientBis.setBounds(150, 130, 50, 25);
-		
-		final JTextField clientTextFieldKreis = new JTextField();
-		clientTextFieldKreis.setBounds(130, 200, 80, 25);
-		clientTextFieldKreis.setBorder(BorderFactory.createEtchedBorder());
-		
-		final JTextField clientTextFieldKalender = new JTextField();
-		clientTextFieldKalender.setBounds(130, 230, 80, 25);
-		clientTextFieldKalender.setBorder(BorderFactory.createEtchedBorder());
-		
-		final JTextField clientTextField2 = new JTextField();
-		clientTextField2.setBounds(50, 50, 300, 25);
-		clientTextField2.setBorder(BorderFactory.createEtchedBorder());
+       
+        // Das JTable initialisieren
+        JTable table = new JTable( daten, titel );
+        
+        JPanel panelDementer = new JPanel();
+		panelDementer.setLayout(new BorderLayout());
+		panelDementer.add(table);
 
-		final JTextField clientTextFieldTag = new JTextField();
-		clientTextFieldTag.setBounds(50, 100, 50, 25);
-		clientTextFieldTag.setBorder(BorderFactory.createEtchedBorder());
+		JFrame frameDementer = new JFrame("Client Pflegender");
+		frameDementer.setSize(700, 700);
+		frameDementer.setLocation(800, 100);
+		panelDementer.setVisible(true);
+		frameDementer.add(panelDementer);
+        frameDementer.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        frameDementer.setVisible( true );
+	}
+
+
+	private static void oeffneDementer() {
+		JFrame frameDementer = new JFrame("Client Dementer");
+		frameDementer.setSize(700, 700);
+		frameDementer.setLocation(800, 100);
+		frameDementer.setLayout(new BorderLayout());
+
+		JPanel panelDementer = new JPanel();
+		panelDementer.setLayout(null);
 		
-		final JTextField clientTextFieldBis = new JTextField();
-		clientTextFieldBis.setBounds(150, 150, 50, 25);
-		clientTextFieldBis.setBorder(BorderFactory.createEtchedBorder());
 		
-		final JTextField clientTextFieldMonat = new JTextField();
-		clientTextFieldMonat.setBounds(150, 100, 50, 25);
-		clientTextFieldMonat.setBorder(BorderFactory.createEtchedBorder());
+		//THEMA
+		JLabel dementerThema = new JLabel("Thema");
+		dementerThema.setBounds(50, 30, 50, 25);
+		final JTextField txtDementerThema = new JTextField();
+		txtDementerThema.setBounds(50, 50, 250, 25);
+		txtDementerThema.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerThema);
+		panelDementer.add(txtDementerThema);
+
+		//BESCHREIBUNG
+		JLabel dementerBeschreibung = new JLabel("Beschreibung");
+		dementerBeschreibung.setBounds(50, 80, 80, 25);
+		JTextField txtDementerBeschreibung = new JTextField();
+		txtDementerBeschreibung.setBounds(50, 100, 250, 25);
+		txtDementerBeschreibung.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerBeschreibung);
+		panelDementer.add(txtDementerBeschreibung);
 		
+		//JAHR
+		JLabel dementerJahr = new JLabel("Jahr");	
+		dementerJahr.setBounds(50, 130, 50, 25);
 		final JTextField clientTextFieldJahr = new JTextField();
-		clientTextFieldJahr.setBounds(250, 100, 50, 25);
+		clientTextFieldJahr.setBounds(50, 150, 75, 25);
 		clientTextFieldJahr.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerJahr);
+		panelDementer.add(clientTextFieldJahr);
+		
+		//MONAT
+		JLabel dementerMonat = new JLabel("Monat");
+		dementerMonat.setBounds(137, 130, 50, 25);	
+		final JTextField txtDementerMonat = new JTextField();
+		txtDementerMonat.setBounds(137, 150, 75, 25);
+		txtDementerMonat.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerMonat);
+		panelDementer.add(txtDementerMonat);
+		
+		//TAG
+		JLabel dementerTag = new JLabel("Tag");
+		dementerTag.setBounds(225, 130, 50, 25);
+		final JTextField txtDementerTag = new JTextField();
+		txtDementerTag.setBounds(225, 150, 75, 25);
+		txtDementerTag.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerTag);
+		panelDementer.add(txtDementerTag);
+		
+		//UHRZEIT
+		JLabel dementerUhrzeit = new JLabel("Beginn");
+		dementerUhrzeit.setBounds(75, 180, 100, 25);
+		final JTextField txtDementerUhr = new JTextField();
+		txtDementerUhr.setBounds(75, 200, 75, 25);
+		txtDementerUhr.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerUhrzeit);
+		panelDementer.add(txtDementerUhr);
 
-		final JTextField clientTextField3 = new JTextField();
-		clientTextField3.setBounds(50, 150, 50, 25);
-		clientTextField3.setBorder(BorderFactory.createEtchedBorder());
-
-		JButton clientButton = new JButton("Fertig");
-		clientButton.setBounds(300, 320, 75, 75);
-		JButton clientButtonHole = new JButton("Alles holen");
-		clientButtonHole.setBounds(0, 320, 200, 75);
-
-		JPanel clientPanel = new JPanel();
-		clientPanel.setLayout(null);
-
+		//DAUER
+		JLabel dementerDauer = new JLabel("Dauer");
+		dementerDauer.setBounds(200, 180, 100, 25);
+		final JTextField txtDementerDauer = new JTextField();
+		txtDementerDauer.setBounds(200, 200, 75, 25);
+		txtDementerDauer.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerDauer);
+		panelDementer.add(txtDementerDauer);
+		
+		//KREIS ID
+		JLabel dementerKreisId = new JLabel("Kreis-ID");
+		dementerKreisId.setBounds(75, 230, 80, 25);
+		final JTextField txtDementerKreis = new JTextField("0");
+		txtDementerKreis.setBounds(75, 250, 75, 25);
+		txtDementerKreis.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerKreisId);
+		panelDementer.add(txtDementerKreis);
+		
+		//KALENDER ID
+		JLabel dementerKalenderId = new JLabel("Kalender-ID");
+		dementerKalenderId.setBounds(200, 230, 75, 25);
+		final JTextField txtDementerKal = new JTextField("0");
+		txtDementerKal.setBounds(200, 250, 75, 25);
+		txtDementerKal.setBorder(BorderFactory.createEtchedBorder());
+		panelDementer.add(dementerKalenderId);
+		panelDementer.add(txtDementerKal);
+		
+		
+		
+		//BTN Termin abschicken
+		JButton btnDemConf = new JButton("Termin eintragen");
+		btnDemConf.setBounds(75, 300, 200, 50);
+		
+		//BTN TERMINE HOLEN
+		JButton btnDementer = new JButton("Alle Termine holen");
+		btnDementer.setBounds(0, 320, 200, 75);
+		
+		
 		// Button Client
-		clientButton.addActionListener(new ActionListener() {
+		btnDemConf.addActionListener(new ActionListener() {
 			// Action wenn Button "Client" gedrueckt wird
 			public void actionPerformed(ActionEvent e) {
-				Kalender termin = new Kalender(clientTextField2.getText(), "Toller Tag", new Dementer(), gibInt(clientTextFieldKreis.getText()),
-						gibInt(clientTextFieldKalender.getText()), gibInt(clientTextFieldJahr.getText()),
-						gibInt(clientTextFieldMonat.getText()), gibInt(clientTextFieldTag.getText()), gibInt(clientTextField3.getText()), 00, gibInt(clientTextFieldBis.getText()));
+				Kalender termin = new Kalender(txtDementerThema.getText(), "Toller Tag", new Dementer(), gibInt(txtDementerKreis.getText()),
+						gibInt(txtDementerKal.getText()), gibInt(clientTextFieldJahr.getText()),
+						gibInt(txtDementerMonat.getText()), gibInt(txtDementerTag.getText()), gibInt(txtDementerUhr.getText()), 00, 0);
 				handler.sendeTermin(termin, termin.getKreisId(), termin.getId());
 				consoleTextArea.append("Eintrag eingetragen \n");
 				consoleTextArea.append(gson.toJson(termin)+"\n");
@@ -215,63 +276,28 @@ public class Swing {
 
 		});
 		
-		Pflegender hans = new Pflegender("Hans", "Peter", 0, 0);
-		
-		final Meinkalender mk1 = new Meinkalender(2014, 01, 01, 10, 10, 10);
-		
-//		hans.addKalenderEintrag(kal);
-		
-		clientButtonHole.addActionListener(new ActionListener() {
+		btnDementer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JsonArray jarray = new JsonArray();
-				jarray = handler.holeTermine(gibInt(clientTextFieldKreis.getText()));
+				jarray = handler.holeTermine(gibInt(txtDementerKreis.getText()));
+				consoleTextArea.append("Folgende Termine aus Kreis Nr: " + gibInt(txtDementerKreis.getText()) + " wurden geholt\n");
 				for(int i=0; i<jarray.size(); i++) {
 					Kalender k = gson.fromJson(jarray.get(i), Kalender.class);
-					if(handler.vergleicheTermin(k, mk1)) {
-						hatZeit = false;
-					}
-					if(hatZeit == false) {
-						consoleTextArea.append("Hat leider keine Zeit");
-					}
+					consoleTextArea.append("ID: " + k.getId() + " /Titel: " + k.getBezeichnung() + "/Beschreibung: " + k.getBeschreibung() + "\n");
+					consoleTextArea.append("Datum und Uhrzeit: " + k.getJahr() + "-"+ k.getMonat() + "-" + 
+					k.getTag() + " - "+ k.getStunde() + ":" + k.getMinute() + "\n");
+					consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
 				}
-				consoleTextArea.append("Wunderbar hat Zeit");
-				
 			}
 		});
 		
-//		consoleTextArea.append("Folgende Termine aus Kreis Nr: " + gibInt(clientTextFieldKreis.getText()) + " wurden geholt\n");
-//		for(int i=0; i<jarray.size(); i++) {
-//			Kalender k = gson.fromJson(jarray.get(i), Kalender.class);
-//			consoleTextArea.append("ID: " + k.getId() + " /Titel: " + k.getBezeichnung() + "/Beschreibung: " + k.getBeschreibung() + "\n");
-//			consoleTextArea.append("Datum und Uhrzeit: " + k.getJahr() + "-"+ k.getMonat() + "-" + 
-//			k.getTag() + " - "+ k.getStunde() + ":" + k.getMinute() + "\n");
-//			consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
-//		}
 		
-
-		clientPanel.add(clientThema);
-		clientPanel.add(clientTag);
-		clientPanel.add(clientMonat);
-		clientPanel.add(clientJahr);
-		clientPanel.add(clientUhrzeit);
-		clientPanel.add(clientButton);
-		clientPanel.add(clientButtonHole);
-		clientPanel.add(clientTextFieldTag);
-		clientPanel.add(clientTextFieldMonat);
-		clientPanel.add(clientTextFieldJahr);
-		clientPanel.add(clientTextField2);
-		clientPanel.add(clientTextField3);
-		clientPanel.add(clientKreisId);
-		clientPanel.add(clientKalenderId);
-		clientPanel.add(clientTextFieldKalender);
-		clientPanel.add(clientTextFieldBis);
-		clientPanel.add(clientBis);
-		clientPanel.add(clientTextFieldKreis);
+		panelDementer.add(btnDemConf);
+//		panelDementer.add(btnDementer);
 		
-
-		// meinFrame2.add(clientThema);
-		meinFrame2.add(clientPanel);
-		meinFrame2.setVisible(true);
+//		frameDementer.add(dementerThema);
+		frameDementer.add(panelDementer);
+		frameDementer.setVisible(true);
 	}
 
 	private void oeffneConsole() {
@@ -300,19 +326,19 @@ public class Swing {
 	}
 
 	private static void fuellen() {
-		int durchlaeufe = 11;
-		for (int i = 1; i < durchlaeufe; i++) {
+		int durchlaeufe = 10;
+		for (int i = 0; i < durchlaeufe; i++) {
 			Dementer dementer = new Dementer("DementerN" + i, "DementerV" + i, i, i, "hat hunger");
 			String dementers = gson.toJson(dementer);
 			JsonObject dementerj = gson.fromJson(dementers, JsonObject.class);
 			dv.add(dementerj, "dementer");
-			
+
 			Pflegender pflegender = new Pflegender("NachName" + i, i+ "Vorname", i, i);
 			String pflegenders = gson.toJson(pflegender);
 			JsonObject pflegenderj = gson.fromJson(pflegenders,JsonObject.class);
 			dv.add(pflegenderj, "pflegender");
 
-			Kalender kalender = new Kalender("Sauberkeit", "bitte putzen", dementer, i, i, 2000+i, 1+i, 1+i, 1+i, 1+i, 3%i);
+			Kalender kalender = new Kalender("Sauberkeit", "bitte putzen", dementer, i, i, 2000+i, 1+i, 1+i, 1+i, 1+i, 3%(i+1));
 			String kalenders = gson.toJson(kalender);
 			JsonObject kalenderj = gson.fromJson(kalenders, JsonObject.class);
 			dv.add(kalenderj, "kalender");
