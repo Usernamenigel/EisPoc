@@ -217,7 +217,7 @@ public class SwingAlt {
 		
 		Pflegender hans = new Pflegender("Hans", "Peter", 0, 0);
 		
-		final Meinkalender mk1 = new Meinkalender(2014, 01, 01, 10, 10, 10);
+		final Meinkalender mk1 = new Meinkalender(null, null, 2014, 01, 01, 10, 10, 10);
 		
 //		hans.addKalenderEintrag(kal);
 		

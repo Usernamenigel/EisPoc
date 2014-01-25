@@ -7,14 +7,17 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import rest.WebServer;
 import jsonklassen.Dementer;
 import jsonklassen.Kalender;
 import jsonklassen.Kommentar;
 import jsonklassen.Kreis;
+import jsonklassen.Meinkalender;
 import jsonklassen.Pflegender;
 import jsonklassen.Todo;
 
@@ -40,6 +43,9 @@ public class Swing {
 	static ClientHandler handler = new ClientHandler();
 	static JTextArea consoleTextArea = new JTextArea();
 	static DateFormat sdf;
+	static DefaultTableModel modelDementer2 = new DefaultTableModel();
+	static JTable tableDementer2 = new JTable(modelDementer2);
+	static JScrollPane tableScrollPane2 = new JScrollPane(tableDementer2);
 	
 	public void an() {
 		JFrame frameStart = new JFrame("Beispiel JFrame");
@@ -128,34 +134,166 @@ public class Swing {
 
 	
 	protected void oeffnePflegender() {
-				
-		  // Die Daten für das Table
-	    String[] titel =  {
-	      "Name", "Hat Zeit"
-	    };
-	    
-		String[][] daten = {
-			    { "Japan", "245" }, { "USA", "240" }, { "Italien", "220" },
-			    { "Spanien", "217" }, {"Türkei", "215"} ,{ "England", "214" },
-			    { "Frankreich", "190" }, {"Griechenland", "185" },
-			    { "Deutschland", "180" }, {"Portugal", "170" }
-			    };
-		
-       
-        // Das JTable initialisieren
-        JTable table = new JTable( daten, titel );
-        
-        JPanel panelDementer = new JPanel();
-		panelDementer.setLayout(new BorderLayout());
-		panelDementer.add(table);
 
-		JFrame frameDementer = new JFrame("Client Pflegender");
-		frameDementer.setSize(700, 700);
-		frameDementer.setLocation(800, 100);
-		panelDementer.setVisible(true);
-		frameDementer.add(panelDementer);
-        frameDementer.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        frameDementer.setVisible( true );
+		final ArrayList<Meinkalender> termine = new ArrayList<Meinkalender>();
+		
+		JFrame framePflegender = new JFrame("Client Pflegender");
+		framePflegender.setSize(750, 500);
+		framePflegender.setLocation(500, 450);
+		framePflegender.setLayout(new GridLayout(1,2));
+		
+		JPanel panel2Pflegender = new JPanel(new BorderLayout());
+		JPanel panelPflegender = new JPanel(null);
+		
+		framePflegender.add(panelPflegender);
+		framePflegender.add(panel2Pflegender);
+		framePflegender.setVisible(true);
+		
+		//BESCHRIFTUNG
+		JLabel pflegenderBeschr = new JLabel("Persoenlicher Kalender");
+		pflegenderBeschr.setBounds(125, 5, 150, 25);
+		panelPflegender.add(pflegenderBeschr, BorderLayout.NORTH);
+		
+		//THEMA
+		JLabel pflegenderThema = new JLabel("Thema");
+		pflegenderThema.setBounds(50, 30, 50, 25);
+		final JTextField txtPflegenderThema = new JTextField();
+		txtPflegenderThema.setBounds(50, 50, 250, 25);
+		txtPflegenderThema.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(pflegenderThema);
+		panelPflegender.add(txtPflegenderThema);
+		
+		//BESCHREIBUNG
+		JLabel PflegenderBeschreibung = new JLabel("Beschreibung");
+		PflegenderBeschreibung.setBounds(50, 80, 80, 25);
+		final JTextField txtPflegenderBeschreibung = new JTextField();
+		txtPflegenderBeschreibung.setBounds(50, 100, 250, 25);
+		txtPflegenderBeschreibung.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(PflegenderBeschreibung);
+		panelPflegender.add(txtPflegenderBeschreibung);
+		
+		
+		//JAHR
+		JLabel pflegenderJahr = new JLabel("Jahr");	
+		pflegenderJahr.setBounds(50, 130, 50, 25);
+		final JTextField clientTextFieldJahr = new JTextField();
+		clientTextFieldJahr.setBounds(50, 150, 75, 25);
+		clientTextFieldJahr.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(pflegenderJahr);
+		panelPflegender.add(clientTextFieldJahr);
+		
+		//MONAT
+		JLabel pflegenderMonat = new JLabel("Monat");
+		pflegenderMonat.setBounds(137, 130, 50, 25);	
+		final JTextField txtPflegenderMonat = new JTextField();
+		txtPflegenderMonat.setBounds(137, 150, 75, 25);
+		txtPflegenderMonat.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(pflegenderMonat);
+		panelPflegender.add(txtPflegenderMonat);
+		
+		//TAG
+		JLabel pflegenderTag = new JLabel("Tag");
+		pflegenderTag.setBounds(225, 130, 50, 25);
+		final JTextField txtPflegenderTag = new JTextField();
+		txtPflegenderTag.setBounds(225, 150, 75, 25);
+		txtPflegenderTag.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(pflegenderTag);
+		panelPflegender.add(txtPflegenderTag);
+		
+		//UHRZEIT
+		JLabel pflegenderUhrzeit = new JLabel("Beginn");
+		pflegenderUhrzeit.setBounds(75, 180, 100, 25);
+		final JTextField txtPflegenderUhr = new JTextField();
+		txtPflegenderUhr.setBounds(75, 200, 75, 25);
+		txtPflegenderUhr.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(pflegenderUhrzeit);
+		panelPflegender.add(txtPflegenderUhr);
+
+		//DAUER
+		JLabel pflegenderDauer = new JLabel("Dauer");
+		pflegenderDauer.setBounds(200, 180, 100, 25);
+		final JTextField txtPflegenderDauer = new JTextField();
+		txtPflegenderDauer.setBounds(200, 200, 75, 25);
+		txtPflegenderDauer.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(pflegenderDauer);
+		panelPflegender.add(txtPflegenderDauer);
+		
+		//KREIS ID
+		JLabel pflegenderKreisId = new JLabel("Kreis-ID");
+		pflegenderKreisId.setBounds(140, 325, 75, 25);
+		final JTextField txtpflegenderKreis = new JTextField("0");
+		txtpflegenderKreis.setBounds(140, 345, 75, 25);
+		txtpflegenderKreis.setBorder(BorderFactory.createEtchedBorder());
+		panelPflegender.add(pflegenderKreisId);
+		panelPflegender.add(txtpflegenderKreis);
+
+
+		
+		final DefaultTableModel model = new DefaultTableModel(); 
+		JTable table = new JTable(model); 
+		
+		model.addColumn("Titel"); 
+		model.addColumn("Datum");
+		model.addColumn("Uhrzeit");
+		model.addColumn("Dauer");
+		
+		 // Das JTable initialisieren
+		 JScrollPane tableScrollPane = new JScrollPane(table);
+		 panel2Pflegender.add(tableScrollPane); 
+		
+		
+		//BTN Termin abschicken
+		JButton btnPflegenderEintrag = new JButton("Termin eintragen");
+		btnPflegenderEintrag.setBounds(75, 250, 200, 50);
+		panelPflegender.add(btnPflegenderEintrag);
+		// Button Client
+		btnPflegenderEintrag.addActionListener(new ActionListener() {
+					// Action wenn Button "Client" gedrueckt wird
+					public void actionPerformed(ActionEvent e) {
+						Meinkalender termin = new Meinkalender(txtPflegenderThema.getText(), txtPflegenderBeschreibung.getText(),
+								gibInt(clientTextFieldJahr.getText()),
+								gibInt(txtPflegenderMonat.getText()),
+								gibInt(txtPflegenderTag.getText()),
+								gibInt(txtPflegenderUhr.getText()),
+								00,
+								gibInt(txtPflegenderDauer.getText()));
+						termine.add(termin);
+						String zeit = txtPflegenderTag.getText() + "." + txtPflegenderMonat.getText() + "." + clientTextFieldJahr.getText();
+						String uhr = txtPflegenderUhr.getText() + ":00";
+						String dauer = txtPflegenderDauer.getText() + " Stunden";
+						model.addRow(new Object[]{txtPflegenderThema.getText(), zeit, uhr, dauer});
+					}
+				});
+		
+		
+		//BTN HOLEN UND VERGLEICHEN
+		JButton btnPflegenderVergleiche = new JButton("Holen und vergleichen");
+		btnPflegenderVergleiche.setBounds(75, 375, 200, 50);
+		panelPflegender.add(btnPflegenderVergleiche);
+
+		btnPflegenderVergleiche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JsonArray jarray = new JsonArray();
+				jarray = handler.holeTermine(gibInt(txtpflegenderKreis
+						.getText()));
+				for(int i=0; i<jarray.size(); i++) {
+					for(int j=0; j<termine.size(); j++) {
+						if(handler.vergleicheTermin(gson.fromJson(jarray.get(i), Kalender.class), termine.get(j))) {
+							modelDementer2.addRow(new Object[]{gson.fromJson(jarray.get(i), Kalender.class).getBezeichnung(), "Ja"});
+							System.out.println("ASDASDASDSAD");
+						}
+						else {
+							modelDementer2.addRow(new Object[]{gson.fromJson(jarray.get(i), Kalender.class).getBezeichnung(), "Nein"});
+							System.out.println("ASDASDASDSAD");
+						}
+					}
+				}
+
+			}
+		});
+		
+	  
+		
 	}
 
 
@@ -163,10 +301,29 @@ public class Swing {
 		JFrame frameDementer = new JFrame("Client Dementer");
 		frameDementer.setSize(700, 700);
 		frameDementer.setLocation(800, 100);
-		frameDementer.setLayout(new BorderLayout());
+		frameDementer.setLayout(new GridLayout(1,2));
 
 		JPanel panelDementer = new JPanel();
+		JPanel panelDementer2 = new JPanel(new BorderLayout());
 		panelDementer.setLayout(null);
+		
+		//TABELLE 1
+		final DefaultTableModel modelDementer = new DefaultTableModel(); 
+		JTable tableDementer = new JTable(modelDementer); 
+		modelDementer.addColumn("Titel"); 
+		modelDementer.addColumn("Datum");
+		modelDementer.addColumn("Uhrzeit");
+		modelDementer.addColumn("Dauer");
+		JScrollPane tableScrollPane = new JScrollPane(tableDementer);
+		panelDementer2.add(tableScrollPane, BorderLayout.NORTH); 
+		
+		//TABELLE 2
+		modelDementer2 = new DefaultTableModel(); 
+		tableDementer2 = new JTable(modelDementer2); 
+		modelDementer2.addColumn("Bezeichnung");
+		modelDementer2.addColumn("Hat jemand Zeit"); 
+		tableScrollPane2 = new JScrollPane(tableDementer2);
+		panelDementer2.add(tableScrollPane2, BorderLayout.CENTER); 
 		
 		
 		//THEMA
@@ -181,7 +338,7 @@ public class Swing {
 		//BESCHREIBUNG
 		JLabel dementerBeschreibung = new JLabel("Beschreibung");
 		dementerBeschreibung.setBounds(50, 80, 80, 25);
-		JTextField txtDementerBeschreibung = new JTextField();
+		final JTextField txtDementerBeschreibung = new JTextField();
 		txtDementerBeschreibung.setBounds(50, 100, 250, 25);
 		txtDementerBeschreibung.setBorder(BorderFactory.createEtchedBorder());
 		panelDementer.add(dementerBeschreibung);
@@ -251,10 +408,10 @@ public class Swing {
 		panelDementer.add(txtDementerKal);
 		
 		
-		
 		//BTN Termin abschicken
 		JButton btnDemConf = new JButton("Termin eintragen");
 		btnDemConf.setBounds(75, 300, 200, 50);
+		panelDementer.add(btnDemConf);
 		
 		//BTN TERMINE HOLEN
 		JButton btnDementer = new JButton("Alle Termine holen");
@@ -265,38 +422,41 @@ public class Swing {
 		btnDemConf.addActionListener(new ActionListener() {
 			// Action wenn Button "Client" gedrueckt wird
 			public void actionPerformed(ActionEvent e) {
-				Kalender termin = new Kalender(txtDementerThema.getText(), "Toller Tag", new Dementer(), gibInt(txtDementerKreis.getText()),
-						gibInt(txtDementerKal.getText()), gibInt(clientTextFieldJahr.getText()),
-						gibInt(txtDementerMonat.getText()), gibInt(txtDementerTag.getText()), gibInt(txtDementerUhr.getText()), 00, 0);
+				Kalender termin = new Kalender(txtDementerThema.getText(),
+						txtDementerBeschreibung.getText(), new Dementer(),
+						gibInt(txtDementerKreis.getText()),
+						gibInt(txtDementerKal.getText()),
+						gibInt(clientTextFieldJahr.getText()),
+						gibInt(txtDementerMonat.getText()),
+						gibInt(txtDementerTag.getText()), gibInt(txtDementerUhr
+								.getText()), 00, gibInt(txtDementerDauer
+								.getText()));
 				handler.sendeTermin(termin, termin.getKreisId(), termin.getId());
-				consoleTextArea.append("Eintrag eingetragen \n");
-				consoleTextArea.append(gson.toJson(termin)+"\n");
-				consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
+				String zeit = txtDementerTag.getText() + "." + txtDementerMonat.getText() + "." + clientTextFieldJahr.getText();
+				String uhr = txtDementerUhr.getText() + ":00";
+				String dauer = txtDementerDauer.getText() + " Stunden";
+				modelDementer.addRow(new Object[]{txtDementerThema.getText(), zeit, uhr, dauer});
 			}
 
 		});
 		
-		btnDementer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JsonArray jarray = new JsonArray();
-				jarray = handler.holeTermine(gibInt(txtDementerKreis.getText()));
-				consoleTextArea.append("Folgende Termine aus Kreis Nr: " + gibInt(txtDementerKreis.getText()) + " wurden geholt\n");
-				for(int i=0; i<jarray.size(); i++) {
-					Kalender k = gson.fromJson(jarray.get(i), Kalender.class);
-					consoleTextArea.append("ID: " + k.getId() + " /Titel: " + k.getBezeichnung() + "/Beschreibung: " + k.getBeschreibung() + "\n");
-					consoleTextArea.append("Datum und Uhrzeit: " + k.getJahr() + "-"+ k.getMonat() + "-" + 
-					k.getTag() + " - "+ k.getStunde() + ":" + k.getMinute() + "\n");
-					consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
-				}
-			}
-		});
+//		btnDementer.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				JsonArray jarray = new JsonArray();
+//				jarray = handler.holeTermine(gibInt(txtDementerKreis.getText()));
+//				consoleTextArea.append("Folgende Termine aus Kreis Nr: " + gibInt(txtDementerKreis.getText()) + " wurden geholt\n");
+//				for(int i=0; i<jarray.size(); i++) {
+//					Kalender k = gson.fromJson(jarray.get(i), Kalender.class);
+//					consoleTextArea.append("ID: " + k.getId() + " /Titel: " + k.getBezeichnung() + "/Beschreibung: " + k.getBeschreibung() + "\n");
+//					consoleTextArea.append("Datum und Uhrzeit: " + k.getJahr() + "-"+ k.getMonat() + "-" + 
+//					k.getTag() + " - "+ k.getStunde() + ":" + k.getMinute() + "\n");
+//					consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
+//				}
+//			}
+//		});
 		
-		
-		panelDementer.add(btnDemConf);
-//		panelDementer.add(btnDementer);
-		
-//		frameDementer.add(dementerThema);
 		frameDementer.add(panelDementer);
+		frameDementer.add(panelDementer2);
 		frameDementer.setVisible(true);
 	}
 
@@ -363,4 +523,32 @@ public class Swing {
 		}
 	}
 
+//	
+//	  // Die Daten für das Table
+//  String[] titel =  {
+//    "Name", "Hat Zeit"
+//  };
+//  
+//	String[][] daten = {
+//		    { "Japan", "245" }, { "USA", "240" }, { "Italien", "220" },
+//		    { "Spanien", "217" }, {"Türkei", "215"} ,{ "England", "214" },
+//		    { "Frankreich", "190" }, {"Griechenland", "185" },
+//		    { "Deutschland", "180" }, {"Portugal", "170" }
+//		    };
+//	
+// 
+//  // Das JTable initialisieren
+//  JTable table = new JTable( daten, titel );
+//  
+//  JPanel panelDementer = new JPanel();
+//	panelDementer.setLayout(new BorderLayout());
+//	panelDementer.add(table);
+//
+//	JFrame frameDementer = new JFrame("Client Pflegender");
+//	frameDementer.setSize(700, 700);
+//	frameDementer.setLocation(800, 100);
+//	panelDementer.setVisible(true);
+//	frameDementer.add(panelDementer);
+//  frameDementer.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+//  frameDementer.setVisible( true );
 }

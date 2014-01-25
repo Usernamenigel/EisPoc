@@ -24,6 +24,7 @@ public class Kalender {
 	int kreisId;
 	int id;
 	int jahr, monat, tag, stunde, minute;
+	boolean zeit = false;
 	
 	public Kalender() {
 		
@@ -68,6 +69,14 @@ public class Kalender {
 	 */
 	public List<Pflegender> getTeilnehmer() {
 		return teilnehmer;
+	}
+	
+	public void setZeit(boolean wert) {
+		zeit = wert;
+	}
+	
+	public boolean getZeit() {
+		return zeit;
 	}
 	
 	public List<Kommentar> getKommentar() {

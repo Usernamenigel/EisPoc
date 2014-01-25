@@ -63,7 +63,6 @@ public class ServiceKalender {
 	@Path("/{id}")
 	@Consumes("text/plain")
 	public void addKalender(String kalender) {
-		System.out.println("HALLO ");
 		dv.add(gson.fromJson(kalender, JsonObject.class), db);
 	}
 	
